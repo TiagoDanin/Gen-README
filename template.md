@@ -82,7 +82,7 @@ Pull requests and stars are always welcome. For bugs and feature requests, pleas
 
 {{showTextIf thanks "## Thanks"}}
 {{#thanks}}
-- [{{name}}]({{{url}}}) {{description}}
+- [{{name}}]({{{url}}}): {{description}}
 {{/thanks}}
 
 {{#license}}

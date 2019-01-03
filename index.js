@@ -117,7 +117,6 @@ const getInfoDeps = async (deps) => {
 		let pkg = await npmPackage(dep).catch(() => {
 			return {}
 		})
-		console.log(pkg)
 		return {
 			...pkg,
 			name: dep,
@@ -188,4 +187,11 @@ const main = async() => {
 	}
 	process.stdout.write(readme)
 }
-main()
+main().catch(async (e) => {
+	process.stdout.write(e.toString())
+	await new Promise((resolve) => setTimeout(
+		resolve,
+		(3000)
+	))
+	return process.exit()
+})

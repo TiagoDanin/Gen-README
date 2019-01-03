@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Nice Test :)\""
+    "test": "DEBUG=* node index.js --write --travis"
   },
   "private": false,
   "repository": "https://github.com/TiagoDanin/Gen-README.git",
@@ -35,6 +35,8 @@
     "handlebars": "4.0.12",
     "lodash": "4.17.11",
     "minimist": "1.2.0",
-    "package-info": "3.0.2",
-  }
+    "package-info": "3.0.2"
+},
+  "preferGlobal": true,
+  "description": "Generate README.md from package.json contents"
 }
