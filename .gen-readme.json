@@ -1,0 +1,16 @@
+{
+	"features": [
+		"Automate and improve your readme",
+		"Awesome Badges",
+		"List dependencies",
+		"Load documentation"
+	],
+	"related": [
+		"package-json-to-readme"
+	],
+	"thanks": [{
+		"name": "zeke",
+		"url": "https://github.com/zeke/package-json-to-readme/",
+		"description": "Gen README is an fork of https://github.com/zeke/package-json-to-readme/"
+	}]
+}
