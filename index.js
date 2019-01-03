@@ -7,22 +7,21 @@ const mustache = require('mustache')
 const argv = require('minimist')(process.argv)
 const { prompt } = require('enquirer')
 
-const checkExample = () => {
+const checkExample = (data) => {
 	const extensions = ['js', 'sh']
 	const files = ['example', '.env.example', 'usage', '.env.usage']
-	var usage = {}
 	extensions.forEach((ext) => {
 		files.forEach((file) => {
 			let exampleFile = path.resolve(`${process.cwd()}/${file}.${ext}`)
 			if (fs.existsSync(exampleFile)) {
-				usage = {
+				data.usage = {
 					language: ext,
 					content: fs.readFileSync(exampleFile).toString()
 				}
 
 				if (ext == 'js') {
 					//replace require('./')
-					usage.content = data.usage.content.replace(
+					data.usage.content = data.usage.content.replace(
 						/require\(['"]?\.\/['"]?\)/,
 						`require("${data.name}")`
 					)
@@ -30,15 +29,28 @@ const checkExample = () => {
 			}
 		})
 	})
-	return usage
+	return data
+}
+
+const checkAuthor = (data) => {
+	if (data.license.toLocaleLowerCase() == 'mit') {
+		if (data.author.name && data.author.url) {
+			data.authorWithUrl = `© [${data.author.name}](${data.author.url})`
+		} else {
+			data.authorWithUrl = `© ${(data.author.name || data.author )}`
+		}
+	} else {
+		data.authorWithUrl = ''
+	}
+	return data
 }
 
 const getInfoDeps = async (deps) => {
 	return Object.keys(deps).map((dep) => {
 		return {
 			name: dep,
-			repository: `https://ghub.io/${{dep}}`,
-			description: '' //TODO GET VIA API NPM
+			repository: `https://ghub.io/${dep}`,
+			description: 'desc' //TODO GET VIA API NPM
 		}
 	})
 }
@@ -50,14 +62,16 @@ const main = async() => {
 		scripts: {
 			test: false
 		},
+		author: '',
+		license: '',
 		repository: 'https://github.com/user/repo.git',
 		dependencies: {},
 		devDependencies: {},
-		preferGlobal: false,
 		features: [],
+		badges: [],
+		preferGlobal: false,
 		documentation: false,
 		travis: false,
-		badges: [],
 		write: false
 	}
 	const packageFile = path.resolve(`${process.cwd()}/package.json`)
@@ -71,11 +85,10 @@ const main = async() => {
 	)
 
 	data.gh = gh(data.repository.url || data.repository)
-	data.usage = checkExample()
+	data = checkExample(data)
+	data = checkAuthor(data)
 	data.dependencies = await getInfoDeps(data.dependencies)
 	data.devDependencies = await getInfoDeps(data.devDependencies)
-
-	//TODO parse author and add in data.author = '© [{{name}}]({{url}})' if license = 'mit'
 
 	//TODO if documentation is link or file or text
 
@@ -90,7 +103,7 @@ const main = async() => {
 	//[![title](badge)](url)
 	//TODO if data.twitter return add in badges
 	//TODO if data.badges return add in badges
-
+	console.log(data)
 	const template = fs.readFileSync(path.join(__dirname, 'template.md')).toString()
 	const readme = mustache.render(template, data)
 	//TODO Use terminal output
