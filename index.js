@@ -2,9 +2,36 @@
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
-const mustache = require('mustache')
-const { prompt } = require('enquirer')
 const gh = require('github-url-to-object')
+const mustache = require('mustache')
+const argv = require('minimist')(process.argv)
+const { prompt } = require('enquirer')
+
+const checkExample = () => {
+	const extensions = ['js', 'sh']
+	const files = ['example', '.env.example', 'usage', '.env.usage']
+	var usage = {}
+	extensions.forEach((ext) => {
+		files.forEach((file) => {
+			let exampleFile = path.resolve(`${process.cwd()}/${file}.${ext}`)
+			if (fs.existsSync(exampleFile)) {
+				usage = {
+					language: ext,
+					content: fs.readFileSync(exampleFile).toString()
+				}
+
+				if (ext == 'js') {
+					//replace require('./')
+					usage.content = data.usage.content.replace(
+						/require\(['"]?\.\/['"]?\)/,
+						`require("${data.name}")`
+					)
+				}
+			}
+		})
+	})
+	return usage
+}
 
 const getInfoDeps = async (deps) => {
 	return Object.keys(deps).map((dep) => {
@@ -30,39 +57,21 @@ const main = async() => {
 		features: [],
 		documentation: false,
 		travis: false,
-		badges: []
+		badges: [],
+		write: false
 	}
 	const packageFile = path.resolve(`${process.cwd()}/package.json`)
 	data = _.merge(
 		data,
 		JSON.parse(fs.readFileSync(packageFile).toString())
 	)
-	//TODO add argv in data
+	data = _.merge(
+		data,
+		argv
+	)
+
 	data.gh = gh(data.repository.url || data.repository)
-
-	//TODO move check examples to function
-	const extensions = ['js', 'sh']
-	const files = ['example', '.env.example', 'usage', '.env.usage']
-	extensions.forEach((ext) => {
-		files.forEach((file) => {
-			let exampleFile = path.resolve(`${process.cwd()}/${file}.${ext}`)
-			if (fs.existsSync(exampleFile)) {
-				data.usage = {
-					language: ext,
-					content: fs.readFileSync(exampleFile).toString()
-				}
-
-				if (ext == 'js') {
-					//replace require('./')
-					data.usage.content = data.usage.content.replace(
-						/require\(['"]?\.\/['"]?\)/,
-						`require("${data.name}")`
-					)
-				}
-			}
-		})
-	})
-
+	data.usage = checkExample()
 	data.dependencies = await getInfoDeps(data.dependencies)
 	data.devDependencies = await getInfoDeps(data.devDependencies)
 
@@ -86,7 +95,8 @@ const main = async() => {
 	const readme = mustache.render(template, data)
 	//TODO Use terminal output
 	console.log(readme)
-	//TODO if data.write is true return write file
-	fs.writeFileSync('README.md', readme)
+	if (data.write) {
+		fs.writeFileSync('README.md', readme)
+	}
 }
 main()
