@@ -86,6 +86,23 @@ baseURL: https://tiagodanin.github.io
 <a href="https://npmjs.org/package/gen-readme"><img src="https://img.shields.io/npm/v/gen-readme.svg?style=flat-square" alt="Version"></a>
 <a href="https://npmjs.org/package/gen-readme"><img src="https://img.shields.io/npm/dt/gen-readme.svg?style=flat-square" alt="Downloads"></a>
 <a href="https://travis-ci.org/TiagoDanin/Gen-README"><img src="https://img.shields.io/travis/TiagoDanin/Gen-README.svg?branch=master&#x26;style=flat-square" alt="Travis"></a></p>
+<p>Generate README.md from package.json contents</p>
+<h2 id="features"><a href="#features">Features</a></h2>
+<ul>
+<li>
+<p>Automate and improve your readme</p>
+<h2 id="features-1"><a href="#features-1">Features</a></h2>
+</li>
+<li>
+<p>Awesome Badges</p>
+<h2 id="features-2"><a href="#features-2">Features</a></h2>
+</li>
+<li>
+<p>List dependencies</p>
+<h2 id="features-3"><a href="#features-3">Features</a></h2>
+</li>
+<li>Load documentation</li>
+</ul>
 <h2 id="installation"><a href="#installation">Installation</a></h2>
 <p>This is a <a href="https://nodejs.org/">Node.js</a> module available through the
 <a href="https://www.npmjs.com/">npm registry</a>. It can be installed using the
@@ -94,11 +111,27 @@ or
 <a href="https://yarnpkg.com/en/"><code>yarn</code></a>
 command line tools.</p>
 <pre><code class="hljs language-sh"><span class="hljs-comment"># NPM</span>
-npm install gen-readme --save
+npm install gen-readme --global
 <span class="hljs-comment"># Or Using Yarn</span>
-yarn add gen-readme</code></pre>
+yarn global add gen-readme</code></pre>
 <h2 id="usage"><a href="#usage">Usage</a></h2>
-<pre><code class="hljs language-sh">gen-readme</code></pre>
+<pre><code class="hljs language-sh"><span class="hljs-comment"># Write to stdout</span>
+gen-readme package.json
+
+<span class="hljs-comment"># Pipe output into a new file</span>
+gen-readme package.json > README.md
+
+<span class="hljs-comment"># Add a Travis badge</span>
+gen-readme package.json --travis
+
+<span class="hljs-comment"># Output in README.md</span>
+gen-readme package.json --write</code></pre>
+<h2 id="tests"><a href="#tests">Tests</a></h2>
+<p>To run the test suite, first install the dependencies, then run <code>test</code>:</p>
+<pre><code class="hljs language-sh"><span class="hljs-comment"># NPM</span>
+npm <span class="hljs-built_in">test</span>
+<span class="hljs-comment"># Or Using Yarn</span>
+yarn <span class="hljs-built_in">test</span></code></pre>
 <h2 id="dependencies"><a href="#dependencies">Dependencies</a></h2>
 <ul>
 <li><a href="https://ghub.io/debug-console-js">debug-console-js</a>: Use o "debug" via console.*</li>
@@ -109,10 +142,17 @@ yarn add gen-readme</code></pre>
 <li><a href="https://ghub.io/lodash">lodash</a>: Lodash modular utilities.</li>
 <li><a href="https://ghub.io/minimist">minimist</a>: parse argument options</li>
 <li><a href="https://ghub.io/package-info">package-info</a>: Get the information of a npm package</li>
-<li><a href="https://ghub.io/package-json">package-json</a>: Get metadata of a package from the npm registry</li>
+</ul>
+<h2 id="related"><a href="#related">Related</a></h2>
+<ul>
+<li><a href=""></a>: </li>
 </ul>
 <h2 id="contributors"><a href="#contributors">Contributors</a></h2>
 <p>Pull requests and stars are always welcome. For bugs and feature requests, please <a href="https://github.com/TiagoDanin/Gen-README/issues">create an issue</a>. <a href="https://github.com/TiagoDanin/Gen-README/graphs/contributors">List of all contributors</a>.</p>
+<h2 id="thanks"><a href="#thanks">Thanks</a></h2>
+<ul>
+<li><a href="https://github.com/zeke/package-json-to-readme/">zeke</a>: Gen README is an fork of <a href="https://github.com/zeke/package-json-to-readme/">https://github.com/zeke/package-json-to-readme/</a></li>
+</ul>
 <h2 id="license"><a href="#license">License</a></h2>
 <p><a href="LICENSE">MIT</a> © <a href="https://TiagoDanin.github.io">Tiago Danin</a></p>
 
