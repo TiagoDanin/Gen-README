@@ -1,0 +1,30 @@
+{
+  "name": "gen-readme",
+  "main": "index.js",
+  "version": "0.0.1",
+  "author": {
+    "name": "Tiago Danin",
+    "email": "TiagoDanin@outlook.com",
+    "url": "https://TiagoDanin.github.io"
+  },
+  "license": "MIT",
+  "keywords": [
+    ""
+  ],
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Nice Test :)\""
+  },
+  "private": false,
+  "repository": "https://github.com/TiagoDanin/Gen-README.git",
+  "homepage": "https://TiagoDanin.github.io/Gen-README",
+  "bugs": "https://github.com/TiagoDanin/Gen-README/issues",
+  "github": {
+    "name": "Gen-README",
+    "owner": "TiagoDanin"
+  },
+  "files": [
+    "LICENSE",
+    "README.md"
+  ]
+}
