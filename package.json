@@ -1,7 +1,7 @@
 {
   "name": "gen-readme",
   "main": "index.js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Generate README.md from package.json contents",
   "author": {
     "name": "Tiago Danin",
@@ -48,6 +48,9 @@
   },
   "engines": {
     "node": ">=8"
+  },
+  "bin": {
+    "gen-readme": "index.js"
   },
   "preferGlobal": true
 }
