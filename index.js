@@ -1,11 +1,27 @@
 #!/usr/bin/env node
+require('debug-console-js')
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
 const gh = require('github-url-to-object')
-const mustache = require('mustache')
+const handlebars = require('handlebars')
 const argv = require('minimist')(process.argv)
 const { prompt } = require('enquirer')
+
+console.log('argv', argv)
+
+const beautifulName = (name) => {
+	return name
+		.replace(/^./, name[0].toUpperCase())
+		.replace(/\-/g, ' ')
+}
+
+const showTextIf = (v, text) => {
+	if (v && v.length != 0) {
+		return text
+	}
+	return ''
+}
 
 const checkExample = (data) => {
 	const extensions = ['js', 'sh']
@@ -32,15 +48,18 @@ const checkExample = (data) => {
 	return data
 }
 
-const checkAuthor = (data) => {
-	if (data.license.toLocaleLowerCase() == 'mit') {
+const checkLicense = (data) => {
+	data.license = {
+		type: data.license
+	}
+	if (data.license.type.toLocaleLowerCase() == 'mit') {
 		if (data.author.name && data.author.url) {
-			data.authorWithUrl = `© [${data.author.name}](${data.author.url})`
+			data.license.authorWithUrl = `© [${data.author.name}](${data.author.url})`
 		} else {
-			data.authorWithUrl = `© ${(data.author.name || data.author )}`
+			data.license.authorWithUrl = `© ${(data.author.name || data.author )}`
 		}
 	} else {
-		data.authorWithUrl = ''
+		data.license.authorWithUrl = ''
 	}
 	return data
 }
@@ -60,6 +79,34 @@ const checkTest = (data) => {
 	if (data.scripts.test && data.scripts.test.startsWith('echo')) {
 		data.scripts.test = false
 	}
+	return data
+}
+
+const checkBadges = (data) => {
+	var list = [{
+		title: 'Node',
+		badge: `https://img.shields.io/node/v/${data.name}.svg?style=${data.badges.style}`,
+		url: `https://npmjs.org/package/${data.name}`
+	}, {
+		title: 'Version',
+		badge: `https://img.shields.io/npm/v/${data.name}.svg?style=${data.badges.style}`,
+		url: `https://npmjs.org/package/${data.name}`
+	}, {
+		title: 'Downloads',
+		badge: `https://img.shields.io/npm/dt/${data.name}.svg?style=${data.badges.style}`,
+		url: `https://npmjs.org/package/${data.name}`
+	}]
+	var travis = [{
+		title: 'Travis',
+		badge: `https://img.shields.io/travis/${data.gh.user}/${data.gh.repo}.svg?branch=master&style=${data.badges.style}`,
+		url: `${data.gh.travis_url}`
+	}]
+	if (data.travis) {
+		list = [...list, ...travis]
+	}
+	data.badges.list = [...list, ...data.badges.list]
+	//TODO https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg?style=flat-square
+	//TODO if data.twitter return add in badges
 	return data
 }
 
@@ -86,7 +133,12 @@ const main = async() => {
 		dependencies: {},
 		devDependencies: {},
 		features: [],
-		badges: [],
+		thanks: [],
+		related: [],
+		badges: {
+			style: 'flat-square',
+			list: []
+		},
 		preferGlobal: false,
 		documentation: false,
 		travis: false,
@@ -104,29 +156,23 @@ const main = async() => {
 
 	data.gh = gh(data.repository.url || data.repository)
 	data = checkExample(data)
-	data = checkAuthor(data)
+	data = checkLicense(data)
 	data = checkDocumentation(data)
 	data = checkTest(data)
+	data = checkBadges(data)
 	data.dependencies = await getInfoDeps(data.dependencies)
 	data.devDependencies = await getInfoDeps(data.devDependencies)
 
-
-	//TODO Badges
-	//https://npmjs.org/package/{{name}}
-	//https://img.shields.io/npm/v/{{name}}.svg?style=flat-square
-	//https://img.shields.io/node/v/{{name}}.svg?style=flat-square
-	//https://img.shields.io/npm/dt/{{name}}.svg?style=flat-square
-	//https://img.shields.io/travis/{{gh.user}}/{{gh.repo}}.svg?branch=master&style=flat-square
-	//[![title](badge)](url)
-	//TODO if data.twitter return add in badges
-	//TODO if data.badges return add in badges
-	console.log(data)
+	console.log('data', data)
+	handlebars.registerHelper('showTextIf', showTextIf)
+	handlebars.registerHelper('beautiful', beautifulName)
 	const template = fs.readFileSync(path.join(__dirname, 'template.md')).toString()
-	const readme = mustache.render(template, data)
-	//TODO Use terminal output
-	console.log(readme)
+	var readme = handlebars.compile(template)(data)
+	readme = readme.replace(/\n\n/g, '\n')
+	console.log('readme', readme)
 	if (data.write) {
 		fs.writeFileSync('README.md', readme)
 	}
+	process.stdout.write(readme)
 }
 main()
