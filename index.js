@@ -56,6 +56,13 @@ const checkDocumentation = (data) => {
 	return data
 }
 
+const checkTest = (data) => {
+	if (data.scripts.test && data.scripts.test.startsWith('echo')) {
+		data.scripts.test = false
+	}
+	return data
+}
+
 const getInfoDeps = async (deps) => {
 	return Object.keys(deps).map((dep) => {
 		return {
@@ -99,10 +106,10 @@ const main = async() => {
 	data = checkExample(data)
 	data = checkAuthor(data)
 	data = checkDocumentation(data)
+	data = checkTest(data)
 	data.dependencies = await getInfoDeps(data.dependencies)
 	data.devDependencies = await getInfoDeps(data.devDependencies)
 
-	//TODO if teste not start with "echo" return test = false
 
 	//TODO Badges
 	//https://npmjs.org/package/{{name}}
