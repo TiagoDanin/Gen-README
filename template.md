@@ -1,7 +1,9 @@
-# {{name}}
-{{badges}}
+# {{beautiful gh.repo}}
+{{#badges.list}}
+[![{{title}}]({{{badge}}})]({{{url}}})
+{{/badges.list}}
 
-{{description}}
+{{{description}}}
 
 {{#features}}
 ## Features
@@ -61,7 +63,6 @@ yarn test
 {{/scripts.test}}
 
 ## Dependencies
-
 {{#dependencies}}
 - [{{name}}]({{{repository}}}): {{description}}
 {{/dependencies}}
@@ -69,15 +70,26 @@ yarn test
 None
 {{/dependencies}}
 
-{{#devDependencies}}
-## Dev Dependencies
-{{/devDependencies}}
-
+{{showTextIf devDependencies "## Dev Dependencies"}}
 {{#devDependencies}}
 - [{{name}}]({{{repository}}}): {{description}}
 {{/devDependencies}}
 
+{{showTextIf related "## Related"}}
+{{#related}}
+- [{{name}}]({{{repository}}}): {{description}}
+{{/related}}
+
+## Contributors
+
+Pull requests and stars are always welcome. For bugs and feature requests, please [create an issue](https://github.com/{{gh.user}}/{{gh.repo}}/issues). [List of all contributors](https://github.com/{{gh.user}}/{{gh.repo}}/graphs/contributors).
+
+{{showTextIf thanks "## Thanks"}}
+{{#thanks}}
+- [{{name}}]({{{url}}}) {{description}}
+{{/thanks}}
+
 {{#license}}
 ## License
-[{{.}}](LICENSE)
+[{{type}}](LICENSE) {{{authorWithUrl}}}
 {{/license}}
