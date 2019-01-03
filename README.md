@@ -4,6 +4,16 @@
 [![Downloads](https://img.shields.io/npm/dt/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme)
 [![Travis](https://img.shields.io/travis/TiagoDanin/Gen-README.svg?branch=master&style=flat-square)](https://travis-ci.org/TiagoDanin/Gen-README)
 
+Generate README.md from package.json contents
+
+## Features
+- Automate and improve your readme
+## Features
+- Awesome Badges
+## Features
+- List dependencies
+## Features
+- Load documentation
 
 ## Installation
 This is a [Node.js](https://nodejs.org/) module available through the
@@ -15,15 +25,34 @@ command line tools.
 
 ```sh
 # NPM
-npm install gen-readme --save
+npm install gen-readme --global
 # Or Using Yarn
-yarn add gen-readme
+yarn global add gen-readme
 ```
 
 ## Usage
 ```sh
-gen-readme
+# Write to stdout
+gen-readme package.json
 
+# Pipe output into a new file
+gen-readme package.json > README.md
+
+# Add a Travis badge
+gen-readme package.json --travis
+
+# Output in README.md
+gen-readme package.json --write
+
+```
+## Tests
+To run the test suite, first install the dependencies, then run `test`:
+
+```sh
+# NPM
+npm test
+# Or Using Yarn
+yarn test
 ```
 
 ## Dependencies
@@ -35,10 +64,15 @@ gen-readme
 - [lodash](https://ghub.io/lodash): Lodash modular utilities.
 - [minimist](https://ghub.io/minimist): parse argument options
 - [package-info](https://ghub.io/package-info): Get the information of a npm package
-- [package-json](https://ghub.io/package-json): Get metadata of a package from the npm registry
+
+## Related
+- [](): 
 
 ## Contributors
 Pull requests and stars are always welcome. For bugs and feature requests, please [create an issue](https://github.com/TiagoDanin/Gen-README/issues). [List of all contributors](https://github.com/TiagoDanin/Gen-README/graphs/contributors).
+
+## Thanks
+- [zeke](https://github.com/zeke/package-json-to-readme/): Gen README is an fork of https://github.com/zeke/package-json-to-readme/
 
 ## License
 [MIT](LICENSE) © [Tiago Danin](https://TiagoDanin.github.io)
