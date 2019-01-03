@@ -11,7 +11,6 @@
 {{/features}}
 
 ## Installation
-
 This is a [Node.js](https://nodejs.org/) module available through the
 [npm registry](https://www.npmjs.com/). It can be installed using the
 [`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally)
@@ -38,7 +37,6 @@ yarn add {{name}}
 
 {{#usage}}
 ## Usage
-
 ```{{language}}
 {{{content}}}
 ```
@@ -51,7 +49,6 @@ yarn add {{name}}
 
 {{#scripts.test}}
 ## Tests
-
 To run the test suite, first install the dependencies, then run `test`:
 
 ```sh
@@ -81,7 +78,6 @@ None
 {{/related}}
 
 ## Contributors
-
 Pull requests and stars are always welcome. For bugs and feature requests, please [create an issue](https://github.com/{{gh.user}}/{{gh.repo}}/issues). [List of all contributors](https://github.com/{{gh.user}}/{{gh.repo}}/graphs/contributors).
 
 {{showTextIf thanks "## Thanks"}}
