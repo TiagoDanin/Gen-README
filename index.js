@@ -6,7 +6,7 @@ const mustache = require('mustache')
 const { prompt } = require('enquirer')
 const gh = require('github-url-to-object')
 
-const getInfoDeps = (deps) => {
+const getInfoDeps = async (deps) => {
 	return Object.keys(deps).map((dep) => {
 		return {
 			name: dep,
@@ -16,6 +16,7 @@ const getInfoDeps = (deps) => {
 	})
 }
 
+//TODO rename pkg ~> data
 const main = async() => {
 	var pkg = {
 		name: '',
@@ -26,18 +27,21 @@ const main = async() => {
 		repository: 'https://github.com/user/repo.git',
 		dependencies: {},
 		devDependencies: {},
-		preferGlobal: false
-	}
-	const opt = {
-		travis: true
+		preferGlobal: false,
+		features: [],
+		documentation: false,
+		travis: false,
+		badges: []
 	}
 	const packageFile = path.resolve(`${process.cwd()}/package.json`)
 	pkg = _.merge(
 		pkg,
 		JSON.parse(fs.readFileSync(packageFile).toString())
 	)
+	//TODO add argv in pkg
 	pkg.gh = gh(pkg.repository.url || pkg.repository)
 
+	//TODO move check examples to function
 	const extensions = ['js', 'sh']
 	const files = ['example', '.env.example', 'usage', '.env.usage']
 	extensions.forEach((ext) => {
@@ -60,19 +64,30 @@ const main = async() => {
 		})
 	})
 
-	pkg.dependencies = getInfoDeps(pkg.dependencies)
-	pkg.devDependencies = getInfoDeps(pkg.devDependencies)
+	pkg.dependencies = await getInfoDeps(pkg.dependencies)
+	pkg.devDependencies = await getInfoDeps(pkg.devDependencies)
 
+	//TODO parse author and add in pkg.author = '© [{{name}}]({{url}})' if license = 'mit'
+
+	//TODO if documentation is link or file or text
+
+	//TODO if teste not start with "echo" return test = false
+
+	//TODO Badges
 	//https://npmjs.org/package/{{name}}
 	//https://img.shields.io/npm/v/{{name}}.svg?style=flat-square
 	//https://img.shields.io/node/v/{{name}}.svg?style=flat-square
 	//https://img.shields.io/npm/dt/{{name}}.svg?style=flat-square
 	//https://img.shields.io/travis/{{gh.user}}/{{gh.repo}}.svg?branch=master&style=flat-square
 	//[![title](badge)](url)
+	//TODO if pkg.twitter return add in badges
+	//TODO if pkg.badges return add in badges
 
 	const template = fs.readFileSync(path.join(__dirname, 'template.md')).toString()
 	const readme = mustache.render(template, pkg)
+	//TODO Use terminal output
 	console.log(readme)
+	//TODO if pkg.write is true return write file
 	fs.writeFileSync('README.md', readme)
 }
 main()
