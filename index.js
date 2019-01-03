@@ -112,7 +112,6 @@ const checkBadges = (data) => {
 }
 
 const getInfoDeps = async (deps) => {
-	deps = Object.keys(deps)
 	return await Promise.all(deps.map(async (dep) => {
 		let pkg = await npmPackage(dep).catch(() => {
 			return {}
@@ -172,8 +171,9 @@ const main = async() => {
 	data = checkDocumentation(data)
 	data = checkTest(data)
 	data = checkBadges(data)
-	data.dependencies = await getInfoDeps(data.dependencies)
-	data.devDependencies = await getInfoDeps(data.devDependencies)
+	data.dependencies = await getInfoDeps(Object.keys(data.dependencies))
+	data.devDependencies = await getInfoDeps(Object.keys(data.devDependencies))
+	data.related = await getInfoDeps(data.related)
 
 	console.log('data', data)
 	handlebars.registerHelper('showTextIf', showTextIf)

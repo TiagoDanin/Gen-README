@@ -36,7 +36,10 @@
     "lodash": "4.17.11",
     "minimist": "1.2.0",
     "package-info": "3.0.2"
-},
+  },
+  "engines": {
+    "node": ">=8"
+  },
   "preferGlobal": true,
   "description": "Generate README.md from package.json contents"
 }

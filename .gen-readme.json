@@ -6,7 +6,8 @@
 		"Load documentation"
 	],
 	"related": [
-		"package-json-to-readme"
+		"package-json-to-readme",
+		"gen-package"
 	],
 	"thanks": [{
 		"name": "zeke",

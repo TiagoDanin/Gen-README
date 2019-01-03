@@ -8,11 +8,8 @@ Generate README.md from package.json contents
 
 ## Features
 - Automate and improve your readme
-## Features
 - Awesome Badges
-## Features
 - List dependencies
-## Features
 - Load documentation
 
 ## Installation
@@ -66,7 +63,7 @@ yarn test
 - [package-info](https://ghub.io/package-info): Get the information of a npm package
 
 ## Related
-- [](): 
+- [package-json-to-readme](https://ghub.io/package-json-to-readme): Generate a README.md from package.json contents
 
 ## Contributors
 Pull requests and stars are always welcome. For bugs and feature requests, please [create an issue](https://github.com/TiagoDanin/Gen-README/issues). [List of all contributors](https://github.com/TiagoDanin/Gen-README/graphs/contributors).

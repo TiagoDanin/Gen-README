@@ -5,8 +5,8 @@
 
 {{{description}}}
 
+{{showTextIf features "## Features"}}
 {{#features}}
-## Features
 - {{{.}}}
 {{/features}}
 
