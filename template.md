@@ -11,7 +11,7 @@
 {{/features}}
 
 ## Installation
-This is a [Node.js](https://nodejs.org/) module available through the
+Module available through the
 [npm registry](https://www.npmjs.com/). It can be installed using the
 [`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally)
 or

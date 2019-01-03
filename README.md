@@ -64,6 +64,7 @@ yarn test
 
 ## Related
 - [package-json-to-readme](https://ghub.io/package-json-to-readme): Generate a README.md from package.json contents
+- [gen-package](https://ghub.io/gen-package): Intuitive and user-friendly generator of package.json
 
 ## Contributors
 Pull requests and stars are always welcome. For bugs and feature requests, please [create an issue](https://github.com/TiagoDanin/Gen-README/issues). [List of all contributors](https://github.com/TiagoDanin/Gen-README/graphs/contributors).

@@ -84,11 +84,15 @@ const checkTest = (data) => {
 }
 
 const checkBadges = (data) => {
-	var list = [{
-		title: 'Node',
-		badge: `https://img.shields.io/node/v/${data.name}.svg?style=${data.badges.style}`,
-		url: `https://npmjs.org/package/${data.name}`
-	}, {
+	var list = []
+	if (data.engines && data.engines.node) {
+		list = [{
+			title: 'Node',
+			badge: `https://img.shields.io/node/v/${data.name}.svg?style=${data.badges.style}`,
+			url: `https://npmjs.org/package/${data.name}`
+		}]
+	}
+	list = [...list, {
 		title: 'Version',
 		badge: `https://img.shields.io/npm/v/${data.name}.svg?style=${data.badges.style}`,
 		url: `https://npmjs.org/package/${data.name}`
@@ -97,13 +101,12 @@ const checkBadges = (data) => {
 		badge: `https://img.shields.io/npm/dt/${data.name}.svg?style=${data.badges.style}`,
 		url: `https://npmjs.org/package/${data.name}`
 	}]
-	var travis = [{
-		title: 'Travis',
-		badge: `https://img.shields.io/travis/${data.gh.user}/${data.gh.repo}.svg?branch=master&style=${data.badges.style}`,
-		url: `${data.gh.travis_url}`
-	}]
 	if (data.travis) {
-		list = [...list, ...travis]
+		list = [...list, {
+			title: 'Travis',
+			badge: `https://img.shields.io/travis/${data.gh.user}/${data.gh.repo}.svg?branch=master&style=${data.badges.style}`,
+			url: `${data.gh.travis_url}`
+		}]
 	}
 	data.badges.list = [...list, ...data.badges.list]
 	//TODO https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg?style=flat-square
