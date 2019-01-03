@@ -45,6 +45,17 @@ const checkAuthor = (data) => {
 	return data
 }
 
+const checkDocumentation = (data) => {
+	if (data.documentation) {
+		if(data.documentation.startsWith('http')) {
+			data.documentation = `- [${data.name} developer docs](${data.documentation})`
+		} else if (data.documentation.startsWith('./') || data.documentation.startsWith('/')) {
+			data.documentation = fs.readFileSync(data.documentation).toString()
+		}
+	}
+	return data
+}
+
 const getInfoDeps = async (deps) => {
 	return Object.keys(deps).map((dep) => {
 		return {
@@ -87,10 +98,9 @@ const main = async() => {
 	data.gh = gh(data.repository.url || data.repository)
 	data = checkExample(data)
 	data = checkAuthor(data)
+	data = checkDocumentation(data)
 	data.dependencies = await getInfoDeps(data.dependencies)
 	data.devDependencies = await getInfoDeps(data.devDependencies)
-
-	//TODO if documentation is link or file or text
 
 	//TODO if teste not start with "echo" return test = false
 
