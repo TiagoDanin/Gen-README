@@ -13,7 +13,7 @@ Generate README.md from package.json contents
 - Load documentation
 
 ## Installation
-This is a [Node.js](https://nodejs.org/) module available through the
+Module available through the
 [npm registry](https://www.npmjs.com/). It can be installed using the
 [`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally)
 or
@@ -42,6 +42,7 @@ gen-readme package.json --travis
 gen-readme package.json --write
 
 ```
+
 ## Tests
 To run the test suite, first install the dependencies, then run `test`:
 
@@ -61,6 +62,7 @@ yarn test
 - [lodash](https://ghub.io/lodash): Lodash modular utilities.
 - [minimist](https://ghub.io/minimist): parse argument options
 - [package-info](https://ghub.io/package-info): Get the information of a npm package
+
 
 ## Related
 - [package-json-to-readme](https://ghub.io/package-json-to-readme): Generate a README.md from package.json contents

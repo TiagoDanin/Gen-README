@@ -37,9 +37,9 @@ yarn add {{name}}
 
 {{#usage}}
 ## Usage
-```{{language}}
-{{{content}}}
-```
+{{{usageShowCode language "```"}}}{{usageShowCode language language}}
+{{{usageShow content language}}}
+{{{usageShowCode language "```"}}}
 {{/usage}}
 
 {{#documentation}}

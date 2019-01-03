@@ -24,7 +24,24 @@ const showTextIf = (v, text) => {
 	return ''
 }
 
+const usageShow = (content, type) => {
+	if (type == 'url') {
+		return `- [${content.replace(/htt[ps]*:\/\//i, '')}](${content})`
+	}
+	return content
+}
+
+const usageShowCode = (type, text) => {
+	if (type == 'url') {
+		return ''
+	}
+	return text
+}
+
 const checkExample = (data) => {
+	if (data.usage) {
+		return data
+	}
 	const extensions = ['js', 'sh']
 	const files = ['example', '.env.example', 'usage', '.env.usage']
 	extensions.forEach((ext) => {
@@ -179,11 +196,15 @@ const main = async() => {
 	data.related = await getInfoDeps(data.related)
 
 	console.log('data', data)
+
 	handlebars.registerHelper('showTextIf', showTextIf)
 	handlebars.registerHelper('beautiful', beautifulName)
+	handlebars.registerHelper('usageShow', usageShow)
+	handlebars.registerHelper('usageShowCode', usageShowCode)
+
 	const template = fs.readFileSync(path.join(__dirname, 'template.md')).toString()
 	var readme = handlebars.compile(template)(data)
-	readme = readme.replace(/\n\n\n/g, '\n')
+	readme = readme.replace(/\n\n\n/g, '\n\n')
 	console.log('readme', readme)
 	if (data.write) {
 		fs.writeFileSync('README.md', readme)
