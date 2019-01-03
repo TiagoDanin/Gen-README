@@ -1,7 +1,8 @@
 {
   "name": "gen-readme",
   "main": "index.js",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "Generate README.md from package.json contents",
   "author": {
     "name": "Tiago Danin",
     "email": "TiagoDanin@outlook.com",
@@ -9,7 +10,12 @@
   },
   "license": "MIT",
   "keywords": [
-    ""
+    "package-manager",
+    "package-json",
+    "readme",
+    "npm",
+    "generator",
+    "github"
   ],
   "scripts": {
     "start": "node index.js",
@@ -25,7 +31,10 @@
   },
   "files": [
     "LICENSE",
-    "README.md"
+    "README.md",
+    "index.js",
+    "package.json",
+    "template.md"
   ],
   "dependencies": {
     "debug-console-js": "1.0.0",
@@ -40,6 +49,5 @@
   "engines": {
     "node": ">=8"
   },
-  "preferGlobal": true,
-  "description": "Generate README.md from package.json contents"
+  "preferGlobal": true
 }
