@@ -16,9 +16,8 @@ const getInfoDeps = async (deps) => {
 	})
 }
 
-//TODO rename pkg ~> data
 const main = async() => {
-	var pkg = {
+	var data = {
 		name: '',
 		description: '',
 		scripts: {
@@ -34,12 +33,12 @@ const main = async() => {
 		badges: []
 	}
 	const packageFile = path.resolve(`${process.cwd()}/package.json`)
-	pkg = _.merge(
-		pkg,
+	data = _.merge(
+		data,
 		JSON.parse(fs.readFileSync(packageFile).toString())
 	)
-	//TODO add argv in pkg
-	pkg.gh = gh(pkg.repository.url || pkg.repository)
+	//TODO add argv in data
+	data.gh = gh(data.repository.url || data.repository)
 
 	//TODO move check examples to function
 	const extensions = ['js', 'sh']
@@ -48,26 +47,26 @@ const main = async() => {
 		files.forEach((file) => {
 			let exampleFile = path.resolve(`${process.cwd()}/${file}.${ext}`)
 			if (fs.existsSync(exampleFile)) {
-				pkg.usage = {
+				data.usage = {
 					language: ext,
 					content: fs.readFileSync(exampleFile).toString()
 				}
 
 				if (ext == 'js') {
 					//replace require('./')
-					pkg.usage.content = pkg.usage.content.replace(
+					data.usage.content = data.usage.content.replace(
 						/require\(['"]?\.\/['"]?\)/,
-						`require("${pkg.name}")`
+						`require("${data.name}")`
 					)
 				}
 			}
 		})
 	})
 
-	pkg.dependencies = await getInfoDeps(pkg.dependencies)
-	pkg.devDependencies = await getInfoDeps(pkg.devDependencies)
+	data.dependencies = await getInfoDeps(data.dependencies)
+	data.devDependencies = await getInfoDeps(data.devDependencies)
 
-	//TODO parse author and add in pkg.author = '© [{{name}}]({{url}})' if license = 'mit'
+	//TODO parse author and add in data.author = '© [{{name}}]({{url}})' if license = 'mit'
 
 	//TODO if documentation is link or file or text
 
@@ -80,14 +79,14 @@ const main = async() => {
 	//https://img.shields.io/npm/dt/{{name}}.svg?style=flat-square
 	//https://img.shields.io/travis/{{gh.user}}/{{gh.repo}}.svg?branch=master&style=flat-square
 	//[![title](badge)](url)
-	//TODO if pkg.twitter return add in badges
-	//TODO if pkg.badges return add in badges
+	//TODO if data.twitter return add in badges
+	//TODO if data.badges return add in badges
 
 	const template = fs.readFileSync(path.join(__dirname, 'template.md')).toString()
-	const readme = mustache.render(template, pkg)
+	const readme = mustache.render(template, data)
 	//TODO Use terminal output
 	console.log(readme)
-	//TODO if pkg.write is true return write file
+	//TODO if data.write is true return write file
 	fs.writeFileSync('README.md', readme)
 }
 main()
