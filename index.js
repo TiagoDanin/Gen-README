@@ -5,6 +5,7 @@ const path = require('path')
 const _ = require('lodash')
 const gh = require('github-url-to-object')
 const handlebars = require('handlebars')
+const npmPackage = require('package-info')
 const argv = require('minimist')(process.argv)
 const { prompt } = require('enquirer')
 
@@ -111,13 +112,18 @@ const checkBadges = (data) => {
 }
 
 const getInfoDeps = async (deps) => {
-	return Object.keys(deps).map((dep) => {
+	deps = Object.keys(deps)
+	return await Promise.all(deps.map(async (dep) => {
+		let pkg = await npmPackage(dep).catch(() => {
+			return {}
+		})
+		console.log(pkg)
 		return {
+			...pkg,
 			name: dep,
-			repository: `https://ghub.io/${dep}`,
-			description: 'desc' //TODO GET VIA API NPM
+			repository: `https://ghub.io/${dep}`
 		}
-	})
+	}))
 }
 
 const main = async() => {
@@ -145,10 +151,17 @@ const main = async() => {
 		write: false
 	}
 	const packageFile = path.resolve(`${process.cwd()}/package.json`)
+	const config = path.resolve(`${process.cwd()}/.gen-readme.json`)
 	data = _.merge(
 		data,
 		JSON.parse(fs.readFileSync(packageFile).toString())
 	)
+	if (fs.existsSync(config)) {
+		data = _.merge(
+			data,
+			JSON.parse(fs.readFileSync(config).toString())
+		)
+	}
 	data = _.merge(
 		data,
 		argv
@@ -168,7 +181,7 @@ const main = async() => {
 	handlebars.registerHelper('beautiful', beautifulName)
 	const template = fs.readFileSync(path.join(__dirname, 'template.md')).toString()
 	var readme = handlebars.compile(template)(data)
-	readme = readme.replace(/\n\n/g, '\n')
+	readme = readme.replace(/\n\n\n/g, '\n')
 	console.log('readme', readme)
 	if (data.write) {
 		fs.writeFileSync('README.md', readme)
