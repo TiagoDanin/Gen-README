@@ -53,7 +53,7 @@ const checkExample = (data) => {
 				} else if (ext == 'sh') {
 					data.usage = {
 						language: ext,
-						fs.readFileSync(pathFile).toString()
+						content: fs.readFileSync(pathFile).toString()
 					}
 				} else {
 					data.example = {
@@ -175,6 +175,7 @@ const main = async() => {
 	}
 	const packageFile = path.resolve(`${process.cwd()}/package.json`)
 	const config = path.resolve(`${process.cwd()}/.gen-readme.json`)
+	const travis = path.resolve(`${process.cwd()}/.travis.yml`)
 	data = _.merge(
 		data,
 		JSON.parse(fs.readFileSync(packageFile).toString())
@@ -184,6 +185,9 @@ const main = async() => {
 			data,
 			JSON.parse(fs.readFileSync(config).toString())
 		)
+	}
+	if (fs.existsSync(travis)) {
+		data.travis = true
 	}
 	data = _.merge(
 		data,
