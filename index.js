@@ -42,22 +42,27 @@ const checkExample = (data) => {
 	if (data.usage) {
 		return data
 	}
-	const extensions = ['js', 'sh']
-	const files = ['example', '.env.example', 'usage', '.env.usage']
+	const extensions = ['js', 'sh', 'md', 'vue', 'ts']
+	const files = ['example', 'usage', 'docs', 'documentation', 'doc']
 	extensions.forEach((ext) => {
 		files.forEach((file) => {
-			let exampleFile = path.resolve(`${process.cwd()}/${file}.${ext}`)
-			if (fs.existsSync(exampleFile)) {
-				data.usage = {
-					language: ext,
-					content: fs.readFileSync(exampleFile).toString()
-				}
-
-				if (ext == 'js') {
-					//replace require('./')
-					data.usage.content = data.usage.content.replace(
+			let pathFile = path.resolve(`${process.cwd()}/${file}.${ext}`)
+			if (fs.existsSync(pathFile)) {
+				if (ext == 'md') {
+					data.documentation = pathFile
+				} else if (ext == 'sh') {
+					data.usage = {
+						language: ext,
+						fs.readFileSync(pathFile).toString()
+					}
+				} else {
+					data.example = {
+						language: ext,
+						content: fs.readFileSync(pathFile).toString()
+					}
+					data.example.content = data.usage.content.replace(
 						/require\(['"]?\.\/['"]?\)/,
-						`require("${data.name}")`
+						`require('${data.name}')`
 					)
 				}
 			}

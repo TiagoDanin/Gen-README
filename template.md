@@ -42,6 +42,13 @@ yarn add {{name}}
 {{{usageShowCode language "```"}}}
 {{/usage}}
 
+{{#example}}
+## Example
+{{{usageShowCode language "```"}}}{{usageShowCode language language}}
+{{{usageShow content language}}}
+{{{usageShowCode language "```"}}}
+{{/example}}
+
 {{#documentation}}
 ## Documentation
 {{{.}}}
