@@ -38,6 +38,16 @@ const usageShowCode = (type, text) => {
 	return text
 }
 
+const removeSpace = (str) => str.replace(/(\s*)$/g, '')
+
+const removeNewLine = (str) => str.replace(/\n[\n]*\n/gs, '\n\n')
+
+const cleanCode = (str) => removeSpace(removeNewLine(str))
+
+String.prototype.clean = function () {
+	return cleanCode(this)
+}
+
 const checkExample = (data) => {
 	if (data.usage) {
 		return data
@@ -53,12 +63,12 @@ const checkExample = (data) => {
 				} else if (ext == 'sh') {
 					data.usage = {
 						language: ext,
-						content: fs.readFileSync(pathFile).toString()
+						content: fs.readFileSync(pathFile).toString().clean()
 					}
 				} else {
 					data.example = {
 						language: ext,
-						content: fs.readFileSync(pathFile).toString()
+						content: fs.readFileSync(pathFile).toString().clean()
 					}
 					data.example.content = data.usage.content.replace(
 						/require\(['"]?\.\/['"]?\)/,
@@ -92,7 +102,7 @@ const checkDocumentation = (data) => {
 		if(data.documentation.startsWith('http')) {
 			data.documentation = `- [${data.name} developer docs](${data.documentation})`
 		} else if (data.documentation.startsWith('./') || data.documentation.startsWith('/')) {
-			data.documentation = fs.readFileSync(data.documentation).toString()
+			data.documentation = fs.readFileSync(data.documentation).toString().clean()
 		}
 	}
 	return data
@@ -106,7 +116,7 @@ const checkTest = (data) => {
 }
 
 const checkBadges = (data) => {
-	var list = []
+	let list = []
 	if (data.engines && data.engines.node) {
 		list = [{
 			title: 'Node',
@@ -150,7 +160,7 @@ const getInfoDeps = async (deps) => {
 }
 
 const main = async() => {
-	var data = {
+	let data = {
 		name: '',
 		description: '',
 		scripts: {
@@ -171,11 +181,15 @@ const main = async() => {
 		preferGlobal: false,
 		documentation: false,
 		travis: false,
-		write: false
+		atom: false,
+		write: false,
+		engines: {}
 	}
+
 	const packageFile = path.resolve(`${process.cwd()}/package.json`)
 	const config = path.resolve(`${process.cwd()}/.gen-readme.json`)
 	const travis = path.resolve(`${process.cwd()}/.travis.yml`)
+
 	data = _.merge(
 		data,
 		JSON.parse(fs.readFileSync(packageFile).toString())
@@ -186,9 +200,16 @@ const main = async() => {
 			JSON.parse(fs.readFileSync(config).toString())
 		)
 	}
+
 	if (fs.existsSync(travis)) {
 		data.travis = true
 	}
+
+	const enginesKeys = Object.keys(data.engines)
+	if (enginesKeys.includes('atom')) {
+		data.atom = true
+	}
+
 	data = _.merge(
 		data,
 		argv
@@ -212,9 +233,11 @@ const main = async() => {
 	handlebars.registerHelper('usageShowCode', usageShowCode)
 
 	const template = fs.readFileSync(path.join(__dirname, 'template.md')).toString()
-	var readme = handlebars.compile(template)(data)
-	readme = readme.replace(/\n\n\n/g, '\n\n')
+	let readme = handlebars.compile(template)(data)
+	readme = removeNewLine(readme).clean()
+
 	console.log('readme', readme)
+
 	if (data.write) {
 		fs.writeFileSync('README.md', readme)
 	}
