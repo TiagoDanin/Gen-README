@@ -1,56 +1,62 @@
 {
-  "name": "gen-readme",
-  "main": "index.js",
-  "version": "1.3.0",
-  "description": "Generate README.md from package.json contents",
-  "author": {
-    "name": "Tiago Danin",
-    "email": "TiagoDanin@outlook.com",
-    "url": "https://TiagoDanin.github.io"
-  },
-  "license": "MIT",
-  "keywords": [
-    "package-manager",
-    "package-json",
-    "readme",
-    "npm",
-    "generator",
-    "github"
-  ],
-  "scripts": {
-    "start": "node index.js",
-    "test": "DEBUG=* node index.js --write --travis"
-  },
-  "private": false,
-  "repository": "https://github.com/TiagoDanin/Gen-README.git",
-  "homepage": "https://TiagoDanin.github.io/Gen-README",
-  "bugs": "https://github.com/TiagoDanin/Gen-README/issues",
-  "github": {
-    "name": "Gen-README",
-    "owner": "TiagoDanin"
-  },
-  "files": [
-    "LICENSE",
-    "README.md",
-    "index.js",
-    "package.json",
-    "template.md"
-  ],
-  "dependencies": {
-    "debug-console-js": "1.0.0",
-    "enquirer": "2.3.0",
-    "gh-badges": "2.1.0",
-    "github-url-to-object": "4.0.4",
-    "handlebars": "4.1.2",
-    "lodash": "4.17.11",
-    "minimist": "1.2.0",
-    "package-info": "3.0.2"
-  },
-  "engines": {
-    "node": ">=8"
-  },
-  "bin": {
-    "gen-readme": "index.js"
-  },
-  "preferGlobal": true
+	"name": "gen-readme",
+	"main": "index.js",
+	"bin": {
+		"gen-readme": "index.js"
+	},
+	"preferGlobal": true,
+	"version": "1.3.0",
+	"description": "Generate README.md from package.json contents",
+	"author": {
+		"name": "Tiago Danin",
+		"email": "TiagoDanin@outlook.com",
+		"url": "https://TiagoDanin.github.io"
+	},
+	"license": "MIT",
+	"keywords": [
+		"generator",
+		"github",
+		"npm",
+		"package-json",
+		"package-manager",
+		"readme"
+	],
+	"scripts": {
+		"start": "node index.js",
+		"test": "DEBUG=* node index.js --write --travis"
+	},
+	"engines": {
+		"node": ">=8"
+	},
+	"private": false,
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/TiagoDanin/Gen-README.git"
+	},
+	"homepage": "https://TiagoDanin.github.io/Gen-README",
+	"bugs": {
+		"url": "https://github.com/TiagoDanin/Gen-README/issues"
+	},
+	"github": {
+		"name": "Gen-README",
+		"owner": "TiagoDanin"
+	},
+	"files": [
+		"LICENSE",
+		"README.md",
+		"index.js",
+		"package.json",
+		"template.md"
+	],
+	"dependencies": {
+		"debug-console-js": "1.0.0",
+		"enquirer": "2.3.0",
+		"gh-badges": "2.1.0",
+		"github-url-to-object": "4.0.4",
+		"handlebars": "4.1.2",
+		"lodash": "4.17.11",
+		"minimist": "1.2.0",
+		"package-info": "3.0.2"
+	},
+	"devDependencies": {}
 }

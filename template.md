@@ -12,7 +12,7 @@
 
 ## Installation
 
-Module available through the [npm registry](https://www.npmjs.com/). It can be installed using the {{#atom}}[`apm`](https://github.com/atom/apm).{{/atom}} {{^atom}}[`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally) or [`yarn`](https://yarnpkg.com/en/)command line tools.{{/atom}}
+Module available through the [npm registry](https://www.npmjs.com/). It can be installed using the {{#atom}}[`apm`](https://github.com/atom/apm){{/atom}} {{^atom}}[`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally) or [`yarn`](https://yarnpkg.com/en/){{/atom}} command line tools.
 
 ```sh
 {{#atom}}
