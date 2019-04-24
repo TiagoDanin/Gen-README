@@ -1,6 +1,6 @@
 # {{beautiful gh.repo}}
 
-{{#badges.list}}[![{{title}}]({{{badge}}})]({{{url}}}){{/badges.list}}
+{{#badges.list}}[![{{title}}]({{{badge}}})]({{{url}}}) {{/badges.list}}
 
 {{{description}}}
 

@@ -1,6 +1,6 @@
 # Gen README
 
-[![Node](https://img.shields.io/node/v/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme)[![Version](https://img.shields.io/npm/v/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme)[![Downloads](https://img.shields.io/npm/dt/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme)[![Travis](https://img.shields.io/travis/TiagoDanin/Gen-README.svg?branch=master&style=flat-square)](https://travis-ci.org/TiagoDanin/Gen-README)
+[![Node](https://img.shields.io/node/v/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) [![Version](https://img.shields.io/npm/v/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) [![Downloads](https://img.shields.io/npm/dt/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) [![Travis](https://img.shields.io/travis/TiagoDanin/Gen-README.svg?branch=master&style=flat-square)](https://travis-ci.org/TiagoDanin/Gen-README) 
 
 Generate README.md from package.json contents
 
