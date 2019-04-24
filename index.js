@@ -70,7 +70,7 @@ const checkExample = (data) => {
 						language: ext,
 						content: fs.readFileSync(pathFile).toString().clean()
 					}
-					data.example.content = data.usage.content.replace(
+					data.example.content = data.example.content.replace(
 						/require\(['"]?\.\/['"]?\)/,
 						`require('${data.name}')`
 					)
