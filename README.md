@@ -25,6 +25,9 @@ yarn global add gen-readme
 ## Usage
 
 ```sh
+# Show help
+gen-readme --help
+
 # Write to stdout
 gen-readme package.json
 
@@ -51,13 +54,14 @@ yarn test
 
 ## Dependencies
 
-- [debug-console-js](https://ghub.io/debug-console-js): Use o &quot;debug&quot; via console.*
+- [debug](https://ghub.io/debug): small debugging utility
 - [gh-badges](https://ghub.io/gh-badges): Shields.io badge library
 - [github-url-to-object](https://ghub.io/github-url-to-object): Extract user, repo, and other interesting properties from GitHub URLs
 - [handlebars](https://ghub.io/handlebars): Handlebars provides the power necessary to let you build semantic templates effectively with no frustration
 - [lodash](https://ghub.io/lodash): Lodash modular utilities.
-- [minimist](https://ghub.io/minimist): parse argument options
+- [meow](https://ghub.io/meow): CLI app helper
 - [package-info](https://ghub.io/package-info): Get the information of a npm package
+- [update-notifier](https://ghub.io/update-notifier): Update notifications for your CLI app
 
 ## Dev Dependencies
 

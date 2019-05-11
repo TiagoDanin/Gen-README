@@ -1,14 +1,45 @@
 #!/usr/bin/env node
+
 const fs = require('fs')
 const path = require('path')
-require('debug-console-js') // eslint-disable-line import/no-unassigned-import
+const debug = require('debug')
 const {merge} = require('lodash')
 const gh = require('github-url-to-object')
 const handlebars = require('handlebars')
 const npmPackage = require('package-info')
-const argv = require('minimist')(process.argv)
+const updateNotifier = require('update-notifier')
+const meow = require('meow')
 
-console.log('argv', argv)
+const log = debug('gen-readme:log')
+const cli = meow(`
+	Usage
+		$ gen-readme
+
+	Options
+		--travis       Force enable Travis CI Badge
+		--xo           Force enable Travis CI Badge
+		--write, -w    Force enable Travis CI Badge
+
+	Examples
+		$ gen-readme package.json > README.md
+		$ gen-readme package.json --travis --xo
+		$ gen-readme package.json --write
+`, {
+	booleanDefault: false,
+	flags: {
+		travis: {
+			type: 'boolean'
+		},
+		xo: {
+			type: 'boolean'
+		},
+		write: {
+			type: 'boolean',
+			alias: 'w'
+		}
+	}
+})
+updateNotifier({pkg: cli.pkg}).notify()
 
 const beautifulName = name => {
 	return name
@@ -234,7 +265,7 @@ const main = async () => {
 
 	data = merge(
 		data,
-		argv
+		cli.flags
 	)
 
 	data.gh = gh(data.repository.url || data.repository)
@@ -247,7 +278,7 @@ const main = async () => {
 	data.devDependencies = await getInfoDeps(Object.keys(data.devDependencies))
 	data.related = await getInfoDeps(data.related)
 
-	console.log('data', data)
+	log('data', data)
 
 	handlebars.registerHelper('showTextIf', showTextIf)
 	handlebars.registerHelper('beautiful', beautifulName)
@@ -258,7 +289,7 @@ const main = async () => {
 	let readme = handlebars.compile(template)(data)
 	readme = cleanCode(removeNewLine(readme))
 
-	console.log('readme', readme)
+	log('readme', readme)
 
 	if (data.write) {
 		fs.writeFileSync('README.md', readme)
@@ -268,8 +299,8 @@ const main = async () => {
 }
 
 main().catch(async error => {
-	console.log('error', error)
-	process.stdout.write(error.toString())
+	log('error', error)
+	console.error(error)
 	await new Promise(resolve => setTimeout(
 		resolve,
 		(3000)

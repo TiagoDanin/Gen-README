@@ -1,3 +1,6 @@
+# Show help
+gen-readme --help
+
 # Write to stdout
 gen-readme package.json
 
