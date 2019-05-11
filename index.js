@@ -17,8 +17,8 @@ const cli = meow(`
 
 	Options
 		--travis       Force enable Travis CI Badge
-		--xo           Force enable Travis CI Badge
-		--write, -w    Force enable Travis CI Badge
+		--xo           Force enable XO Badge
+		--write, -w    Output README.md file
 
 	Examples
 		$ gen-readme package.json > README.md
@@ -262,6 +262,12 @@ const main = async () => {
 	if (enginesKeys.includes('atom')) {
 		data.atom = true
 	}
+
+	Object.keys(cli.flags).map(f => {
+		if (!cli.flags[f]) {
+			delete cli.flags[f]
+		}
+	})
 
 	data = merge(
 		data,
