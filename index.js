@@ -1,26 +1,26 @@
 #!/usr/bin/env node
-require('debug-console-js')
 const fs = require('fs')
 const path = require('path')
-const _ = require('lodash')
+require('debug-console-js') // eslint-disable-line import/no-unassigned-import
+const {merge} = require('lodash')
 const gh = require('github-url-to-object')
 const handlebars = require('handlebars')
 const npmPackage = require('package-info')
 const argv = require('minimist')(process.argv)
-const { prompt } = require('enquirer')
 
 console.log('argv', argv)
 
-const beautifulName = (name) => {
+const beautifulName = name => {
 	return name
 		.replace(/^./, name[0].toUpperCase())
-		.replace(/\-/g, ' ')
+		.replace(/-/g, ' ')
 }
 
 const showTextIf = (v, text) => {
 	if (v && v.length != 0) {
 		return text
 	}
+
 	return ''
 }
 
@@ -28,6 +28,7 @@ const usageShow = (content, type) => {
 	if (type == 'url') {
 		return `- [${content.replace(/htt[ps]*:\/\//i, '')}](${content})`
 	}
+
 	return content
 }
 
@@ -35,40 +36,38 @@ const usageShowCode = (type, text) => {
 	if (type == 'url') {
 		return ''
 	}
+
 	return text
 }
 
-const removeSpace = (str) => str.replace(/(\s*)$/g, '')
+const removeSpace = str => str.replace(/(\s*)$/g, '')
 
-const removeNewLine = (str) => str.replace(/\n[\n]*\n/gs, '\n\n')
+const removeNewLine = str => str.replace(/\n[\n]*\n/gs, '\n\n')
 
-const cleanCode = (str) => removeSpace(removeNewLine(str))
+const cleanCode = str => removeSpace(removeNewLine(str))
 
-String.prototype.clean = function () {
-	return cleanCode(this)
-}
-
-const checkExample = (data) => {
+const checkExample = data => {
 	if (data.usage) {
 		return data
 	}
+
 	const extensions = ['js', 'sh', 'md', 'vue', 'ts']
 	const files = ['example', 'usage', 'docs', 'documentation', 'doc']
-	extensions.forEach((ext) => {
-		files.forEach((file) => {
-			let pathFile = path.resolve(`${process.cwd()}/${file}.${ext}`)
+	extensions.forEach(ext => {
+		files.forEach(file => {
+			const pathFile = path.resolve(`${process.cwd()}/${file}.${ext}`)
 			if (fs.existsSync(pathFile)) {
-				if (ext == 'md') {
+				if (ext === 'md') {
 					data.documentation = pathFile
-				} else if (ext == 'sh') {
+				} else if (ext === 'sh') {
 					data.usage = {
 						language: ext,
-						content: fs.readFileSync(pathFile).toString().clean()
+						content: cleanCode(fs.readFileSync(pathFile).toString())
 					}
 				} else {
 					data.example = {
 						language: ext,
-						content: fs.readFileSync(pathFile).toString().clean()
+						content: cleanCode(fs.readFileSync(pathFile).toString())
 					}
 					data.example.content = data.example.content.replace(
 						/require\(['"]?\.\/['"]?\)/,
@@ -78,77 +77,93 @@ const checkExample = (data) => {
 			}
 		})
 	})
+
 	return data
 }
 
-const checkLicense = (data) => {
+const checkLicense = data => {
 	data.license = {
 		type: data.license
 	}
-	if (data.license.type.toLocaleLowerCase() == 'mit') {
+	if (data.license.type.toLocaleLowerCase() === 'mit') {
 		if (data.author.name && data.author.url) {
 			data.license.authorWithUrl = `© [${data.author.name}](${data.author.url})`
 		} else {
-			data.license.authorWithUrl = `© ${(data.author.name || data.author )}`
+			data.license.authorWithUrl = `© ${(data.author.name || data.author)}`
 		}
 	} else {
 		data.license.authorWithUrl = ''
 	}
+
 	return data
 }
 
-const checkDocumentation = (data) => {
+const checkDocumentation = data => {
 	if (data.documentation) {
-		if(data.documentation.startsWith('http')) {
+		if (data.documentation.startsWith('http')) {
 			data.documentation = `- [${data.name} developer docs](${data.documentation})`
 		} else if (data.documentation.startsWith('./') || data.documentation.startsWith('/')) {
-			data.documentation = fs.readFileSync(data.documentation).toString().clean()
+			data.documentation = cleanCode(fs.readFileSync(data.documentation).toString())
 		}
 	}
+
 	return data
 }
 
-const checkTest = (data) => {
+const checkTest = data => {
 	if (data.scripts.test && data.scripts.test.startsWith('echo')) {
 		data.scripts.test = false
 	}
+
 	return data
 }
 
-const checkBadges = (data) => {
-	let list = []
-	if (data.engines && data.engines.node) {
-		list = [{
-			title: 'Node',
-			badge: `https://img.shields.io/node/v/${data.name}.svg?style=${data.badges.style}`,
-			url: `https://npmjs.org/package/${data.name}`
-		}]
-	}
-	list = [...list, {
-		title: 'Version',
-		badge: `https://img.shields.io/npm/v/${data.name}.svg?style=${data.badges.style}`,
-		url: `https://npmjs.org/package/${data.name}`
-	}, {
-		title: 'Downloads',
-		badge: `https://img.shields.io/npm/dt/${data.name}.svg?style=${data.badges.style}`,
-		url: `https://npmjs.org/package/${data.name}`
-	}]
+const checkBadges = data => {
+	const list = []
 	if (data.travis) {
-		list = [...list, {
+		list.push({
 			title: 'Travis',
 			badge: `https://img.shields.io/travis/${data.gh.user}/${data.gh.repo}.svg?branch=master&style=${data.badges.style}`,
 			url: `${data.gh.travis_url}`
-		}]
+		})
 	}
+
+	if (data.xo) {
+		list.push({
+			title: 'XO code style',
+			badge: `https://img.shields.io/badge/code%20style-XO-red.svg?style=${data.badges.style}`,
+			url: 'https://github.com/xojs/xo'
+		})
+	}
+
+	if (data.engines && data.engines.node) {
+		list.push({
+			title: 'Node',
+			badge: `https://img.shields.io/node/v/${data.name}.svg?style=${data.badges.style}`,
+			url: `https://npmjs.org/package/${data.name}`
+		})
+	}
+
+	list.push({
+		title: 'Version',
+		badge: `https://img.shields.io/npm/v/${data.name}.svg?style=${data.badges.style}`,
+		url: `https://npmjs.org/package/${data.name}`
+	})
+	list.push({
+		title: 'Downloads',
+		badge: `https://img.shields.io/npm/dt/${data.name}.svg?style=${data.badges.style}`,
+		url: `https://npmjs.org/package/${data.name}`
+	})
+
 	data.badges.list = [...list, ...data.badges.list]
-	//TODO https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg?style=flat-square
-	//TODO if data.twitter return add in badges
+	// TODO https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg?style=flat-square
+	// TODO if data.twitter return add in badges
 	return data
 }
 
-const getInfoDeps = async (deps) => {
-	return await Promise.all(deps.map(async (dep) => {
-		let pkg = await npmPackage(dep).catch(() => {
+const getInfoDeps = deps => {
+	return Promise.all(deps.map(async dep => {
+		const pkg = await npmPackage(dep).catch(() => {
 			return {}
 		})
 		return {
@@ -159,7 +174,7 @@ const getInfoDeps = async (deps) => {
 	}))
 }
 
-const main = async() => {
+const main = async () => {
 	let data = {
 		name: '',
 		description: '',
@@ -183,6 +198,7 @@ const main = async() => {
 		travis: false,
 		atom: false,
 		write: false,
+		xo: false,
 		engines: {}
 	}
 
@@ -190,12 +206,13 @@ const main = async() => {
 	const config = path.resolve(`${process.cwd()}/.gen-readme.json`)
 	const travis = path.resolve(`${process.cwd()}/.travis.yml`)
 
-	data = _.merge(
+	data = merge(
 		data,
 		JSON.parse(fs.readFileSync(packageFile).toString())
 	)
+
 	if (fs.existsSync(config)) {
-		data = _.merge(
+		data = merge(
 			data,
 			JSON.parse(fs.readFileSync(config).toString())
 		)
@@ -205,12 +222,17 @@ const main = async() => {
 		data.travis = true
 	}
 
+	const devDependenciesKeys = Object.keys(data.devDependencies)
+	if (devDependenciesKeys.includes('xo')) {
+		data.xo = true
+	}
+
 	const enginesKeys = Object.keys(data.engines)
 	if (enginesKeys.includes('atom')) {
 		data.atom = true
 	}
 
-	data = _.merge(
+	data = merge(
 		data,
 		argv
 	)
@@ -234,18 +256,21 @@ const main = async() => {
 
 	const template = fs.readFileSync(path.join(__dirname, 'template.md')).toString()
 	let readme = handlebars.compile(template)(data)
-	readme = removeNewLine(readme).clean()
+	readme = cleanCode(removeNewLine(readme))
 
 	console.log('readme', readme)
 
 	if (data.write) {
 		fs.writeFileSync('README.md', readme)
 	}
+
 	process.stdout.write(readme)
 }
-main().catch(async (e) => {
-	process.stdout.write(e.toString())
-	await new Promise((resolve) => setTimeout(
+
+main().catch(async error => {
+	console.log('error', error)
+	process.stdout.write(error.toString())
+	await new Promise(resolve => setTimeout(
 		resolve,
 		(3000)
 	))

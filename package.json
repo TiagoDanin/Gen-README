@@ -6,10 +6,10 @@
 	},
 	"preferGlobal": true,
 	"version": "1.3.2",
-	"description": "Generate README.md from package.json contents",
+	"description": "Generate a README.md from package.json contents. [Fork https://github.com/zeke/package-json-to-readme/]",
 	"author": {
-		"name": "Tiago Danin",
 		"email": "TiagoDanin@outlook.com",
+		"name": "Tiago Danin",
 		"url": "https://TiagoDanin.github.io"
 	},
 	"license": "MIT",
@@ -23,7 +23,7 @@
 	],
 	"scripts": {
 		"start": "node index.js",
-		"test": "DEBUG=* node index.js --write --travis"
+		"test": "xo && DEBUG=* node index.js --write --travis"
 	},
 	"engines": {
 		"node": ">=8"
@@ -50,7 +50,6 @@
 	],
 	"dependencies": {
 		"debug-console-js": "1.0.0",
-		"enquirer": "2.3.0",
 		"gh-badges": "2.1.0",
 		"github-url-to-object": "4.0.4",
 		"handlebars": "4.1.2",
@@ -58,5 +57,17 @@
 		"minimist": "1.2.0",
 		"package-info": "3.0.2"
 	},
-	"devDependencies": {}
+	"devDependencies": {
+		"xo": "0.24.0"
+	},
+	"xo": {
+		"rules": {
+			"quote-props": "warn",
+			"eqeqeq": "warn",
+			"array-callback-return": "warn",
+			"require-atomic-updates": "warn",
+			"no-else-return": "off"
+		},
+		"semicolon": false
+	}
 }

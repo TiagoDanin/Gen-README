@@ -1,7 +1,7 @@
 {
 	"features": [
 		"Automate and improve your readme",
-		"Awesome Badges",
+		"Awesome badges (Travis CI, XO, NPM Download...)",
 		"List dependencies",
 		"Load documentation"
 	],
