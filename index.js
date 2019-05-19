@@ -101,8 +101,8 @@ const checkExample = data => {
 						content: cleanCode(fs.readFileSync(pathFile).toString())
 					}
 					data.example.content = data.example.content.replace(
-						/require\(['"]?\.\/['"]?\)/,
-						`require('${data.name}')`
+						/require\((['"])?\.[/]*['"]?\)/,
+						`require($1${data.name}$1)`
 					)
 				}
 			}
