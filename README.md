@@ -2,7 +2,7 @@
 
 [![Travis](https://img.shields.io/travis/TiagoDanin/Gen-README.svg?branch=master&style=flat-square)](https://travis-ci.org/TiagoDanin/Gen-README) [![XO code style](https://img.shields.io/badge/code%20style-XO-red.svg?style=flat-square)](https://github.com/xojs/xo) [![Node](https://img.shields.io/node/v/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) [![Version](https://img.shields.io/npm/v/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) [![Downloads](https://img.shields.io/npm/dt/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) 
 
-Generate a README.md from package.json contents. [Fork https://github.com/zeke/package-json-to-readme/]
+Generate a README.md from package.json contents.
 
 ## Features
 
@@ -55,6 +55,7 @@ yarn test
 ## Dependencies
 
 - [debug](https://ghub.io/debug): small debugging utility
+- [find-up](https://ghub.io/find-up): Find a file or directory by walking up parent directories
 - [gh-badges](https://ghub.io/gh-badges): Shields.io badge library
 - [github-url-to-object](https://ghub.io/github-url-to-object): Extract user, repo, and other interesting properties from GitHub URLs
 - [handlebars](https://ghub.io/handlebars): Handlebars provides the power necessary to let you build semantic templates effectively with no frustration

@@ -6,7 +6,7 @@
 	},
 	"preferGlobal": true,
 	"version": "1.4.2",
-	"description": "Generate a README.md from package.json contents. [Fork https://github.com/zeke/package-json-to-readme/]",
+	"description": "Generate a README.md from package.json contents.",
 	"author": {
 		"email": "TiagoDanin@outlook.com",
 		"name": "Tiago Danin",
@@ -50,12 +50,13 @@
 	],
 	"dependencies": {
 		"debug": "^4.1.1",
+		"find-up": "^4.0.0",
 		"gh-badges": "2.2.0",
-		"github-url-to-object": "4.0.4",
+		"github-url-to-object": "^4.0.4",
 		"handlebars": "^4.1.2",
 		"lodash": "^4.17.11",
 		"meow": "^5.0.0",
-		"package-info": "3.0.2",
+		"package-info": "^3.0.2",
 		"update-notifier": "^3.0.0"
 	},
 	"devDependencies": {

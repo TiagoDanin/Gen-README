@@ -7,6 +7,7 @@ const {merge} = require('lodash')
 const gh = require('github-url-to-object')
 const handlebars = require('handlebars')
 const npmPackage = require('package-info')
+const findUp = require('find-up')
 const updateNotifier = require('update-notifier')
 const meow = require('meow')
 
@@ -77,37 +78,47 @@ const removeNewLine = str => str.replace(/\n[\n]*\n/gs, '\n\n')
 
 const cleanCode = str => removeSpace(removeNewLine(str))
 
-const checkExample = data => {
-	if (data.usage) {
-		return data
-	}
+const getExtension = file => file.split('.').pop()
 
-	const extensions = ['js', 'sh', 'md', 'vue', 'ts']
-	const files = ['example', 'usage', 'docs', 'documentation', 'doc']
+const addExtensions = (files, extensions) => {
+	const fileWithExtensions = []
+
 	extensions.forEach(ext => {
 		files.forEach(file => {
-			const pathFile = path.resolve(`${process.cwd()}/${file}.${ext}`)
-			if (fs.existsSync(pathFile)) {
-				if (ext === 'md') {
-					data.documentation = pathFile
-				} else if (ext === 'sh') {
-					data.usage = {
-						language: ext,
-						content: cleanCode(fs.readFileSync(pathFile).toString())
-					}
-				} else {
-					data.example = {
-						language: ext,
-						content: cleanCode(fs.readFileSync(pathFile).toString())
-					}
-					data.example.content = data.example.content.replace(
-						/require\((['"])?\.[/]*['"]?\)/,
-						`require($1${data.name}$1)`
-					)
-				}
-			}
+			fileWithExtensions.push(`${file}.${ext}`)
 		})
 	})
+
+	return fileWithExtensions
+}
+
+const checkFiles = async data => {
+	const documentation = await findUp(addExtensions(['docs', 'documentation', 'doc', 'usage'], ['md']))
+	const example = await findUp(addExtensions(['example'], ['js', 'sh', 'md', 'vue', 'ts']))
+	const usage = await findUp(addExtensions(['usage'], ['sh', 'bash']))
+
+	if (documentation) {
+		data.documentation = documentation
+	}
+
+	if (example) {
+		data.example = {
+			language: getExtension(example),
+			content: cleanCode(fs.readFileSync(example).toString())
+		}
+
+		data.example.content = data.example.content.replace(
+			/require\((['"])?\.[/]*['"]?\)/,
+			`require($1${data.name}$1)`
+		)
+	}
+
+	if (usage) {
+		data.usage = {
+			language: getExtension(usage),
+			content: cleanCode(fs.readFileSync(usage).toString())
+		}
+	}
 
 	return data
 }
@@ -275,7 +286,7 @@ const main = async () => {
 	)
 
 	data.gh = gh(data.repository.url || data.repository)
-	data = checkExample(data)
+	data = await checkFiles(data)
 	data = checkLicense(data)
 	data = checkDocumentation(data)
 	data = checkTest(data)
