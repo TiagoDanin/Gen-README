@@ -10,6 +10,8 @@ Generate a README.md from package.json contents.
 - Awesome badges (Travis CI, XO, NPM Download...)
 - List dependencies
 - Load documentation
+- Sort keys
+- Screenshot
 
 ## Installation
 
@@ -55,7 +57,6 @@ yarn test
 ## Dependencies
 
 - [debug](https://ghub.io/debug): small debugging utility
-- [find-up](https://ghub.io/find-up): Find a file or directory by walking up parent directories
 - [gh-badges](https://ghub.io/gh-badges): Shields.io badge library
 - [github-url-to-object](https://ghub.io/github-url-to-object): Extract user, repo, and other interesting properties from GitHub URLs
 - [handlebars](https://ghub.io/handlebars): Handlebars provides the power necessary to let you build semantic templates effectively with no frustration

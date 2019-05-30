@@ -7,7 +7,6 @@ const {merge} = require('lodash')
 const gh = require('github-url-to-object')
 const handlebars = require('handlebars')
 const npmPackage = require('package-info')
-const findUp = require('find-up')
 const updateNotifier = require('update-notifier')
 const meow = require('meow')
 
@@ -92,10 +91,16 @@ const addExtensions = (files, extensions) => {
 	return fileWithExtensions
 }
 
+const getFile = fileWithExtensions => {
+	const files = fileWithExtensions.map(file => path.join(process.cwd(), file))
+	return files.find(file => fs.existsSync(file))
+}
+
 const checkFiles = async data => {
-	const documentation = await findUp(addExtensions(['docs', 'documentation', 'doc', 'usage'], ['md']))
-	const example = await findUp(addExtensions(['example'], ['js', 'sh', 'md', 'vue', 'ts']))
-	const usage = await findUp(addExtensions(['usage'], ['sh', 'bash']))
+	const documentation = await getFile(addExtensions(['docs', 'documentation', 'doc', 'usage'], ['md']))
+	const example = await getFile(addExtensions(['example'], ['js', 'sh', 'md', 'vue', 'ts']))
+	const usage = await getFile(addExtensions(['usage'], ['sh', 'bash']))
+	const screenshot = await getFile(addExtensions(['screenshot'], ['png', 'jpg', 'gif']))
 
 	if (documentation) {
 		data.documentation = documentation
@@ -118,6 +123,10 @@ const checkFiles = async data => {
 			language: getExtension(usage),
 			content: cleanCode(fs.readFileSync(usage).toString())
 		}
+	}
+
+	if (screenshot) {
+		data.screenshot = path.basename(screenshot)
 	}
 
 	return data

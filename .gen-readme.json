@@ -3,7 +3,9 @@
 		"Automate and improve your readme",
 		"Awesome badges (Travis CI, XO, NPM Download...)",
 		"List dependencies",
-		"Load documentation"
+		"Load documentation",
+		"Sort keys",
+		"Screenshot"
 	],
 	"related": [
 		"package-json-to-readme",

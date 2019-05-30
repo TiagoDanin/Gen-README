@@ -4,6 +4,8 @@
 
 {{{description}}}
 
+{{#screenshot}}[![Screenshot]({{{.}}})](){{/screenshot}}
+
 {{showTextIf features "## Features"}}
 
 {{#features}}
@@ -103,7 +105,7 @@ Pull requests and stars are always welcome. For bugs and feature requests, pleas
 - [{{name}}]({{{url}}}): {{description}}
 {{/thanks}}
 
-{{#license}}     
+{{#license}}
 ## License
 
 [{{type}}](LICENSE) {{{authorWithUrl}}}
