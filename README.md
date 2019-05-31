@@ -1,6 +1,6 @@
 # Gen README
 
-[![Travis](https://img.shields.io/travis/TiagoDanin/Gen-README.svg?branch=master&style=flat-square)](https://travis-ci.org/TiagoDanin/Gen-README) [![XO code style](https://img.shields.io/badge/code%20style-XO-red.svg?style=flat-square)](https://github.com/xojs/xo) [![Node](https://img.shields.io/node/v/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) [![Version](https://img.shields.io/npm/v/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) [![Downloads](https://img.shields.io/npm/dt/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) 
+[![Travis](https://img.shields.io/travis/TiagoDanin/Gen-README.svg?branch=master&style=flat-square)](https://travis-ci.org/TiagoDanin/Gen-README) [![Downloads](https://img.shields.io/npm/dt/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) [![Node](https://img.shields.io/node/v/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) [![Version](https://img.shields.io/npm/v/gen-readme.svg?style=flat-square)](https://npmjs.org/package/gen-readme) [![Fork](https://img.shields.io/badge/Fork-Package%20Json%20To%20Readme-blue.svg?style=flat-square)](https//github.com/zeke/package-json-to-readme) [![XO code style](https://img.shields.io/badge/code%20style-XO-red.svg?style=flat-square)](https://github.com/xojs/xo) 
 
 Generate a README.md from package.json contents.
 
@@ -57,9 +57,9 @@ yarn test
 ## Dependencies
 
 - [debug](https://ghub.io/debug): small debugging utility
-- [gh-badges](https://ghub.io/gh-badges): Shields.io badge library
 - [github-url-to-object](https://ghub.io/github-url-to-object): Extract user, repo, and other interesting properties from GitHub URLs
 - [handlebars](https://ghub.io/handlebars): Handlebars provides the power necessary to let you build semantic templates effectively with no frustration
+- [locate-path](https://ghub.io/locate-path): Get the first path that exists on disk of multiple paths
 - [lodash](https://ghub.io/lodash): Lodash modular utilities.
 - [meow](https://ghub.io/meow): CLI app helper
 - [package-info](https://ghub.io/package-info): Get the information of a npm package

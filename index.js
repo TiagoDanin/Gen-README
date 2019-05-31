@@ -1,18 +1,19 @@
 #!/usr/bin/env node
 
+const fs = require('fs')
+const path = require('path')
 const {merge} = require('lodash')
 const debug = require('debug')
-const fs = require('fs')
 const gh = require('github-url-to-object')
 const handlebars = require('handlebars')
 const meow = require('meow')
 const npmPackage = require('package-info')
-const path = require('path')
 const updateNotifier = require('update-notifier')
 const locatePath = require('locate-path')
 
+const log = (type, input) => debug(`gen-readme:${type}`)(input)
+
 const cwd = process.cwd()
-const log = debug('gen-readme:log')
 const cli = meow(`
 	Usage
 		$ gen-readme
@@ -81,7 +82,7 @@ const cleanCode = str => removeSpace(removeNewLine(str))
 
 const getExtension = file => file.split('.').pop()
 
-const addPaths = (paths, files)=> {
+const addPaths = (paths, files) => {
 	const newPaths = []
 
 	paths.forEach(directory => {
@@ -185,7 +186,7 @@ const checkTest = data => {
 }
 
 const checkBadges = data => {
-	const list = []
+	let list = []
 	if (data.travis) {
 		list.push({
 			title: 'Travis',
@@ -221,9 +222,58 @@ const checkBadges = data => {
 		url: `https://npmjs.org/package/${data.name}`
 	})
 
-	data.badges.list = [...list, ...data.badges.list]
+	if (data.badges.list.length > 0) {
+		data.badges.list.map(badge => {
+			let title = ''
+			let status = ''
+			let color = ''
+			let url = ''
 
-	// TODO https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg?style=flat-square
+			if (typeof badge === 'string') {
+				const parameter = badge.split(':')
+				if (parameter.length < 4) {
+					return log('badges', 'Badge format not is "TITLE:STATUS:COLOR:URL"')
+				}
+
+				title = parameter[0]
+				status = parameter[1]
+				color = parameter[2]
+				url = parameter[3]
+
+				for (let i = 4; i < parameter.length; i++) {
+					url += parameter[i]
+				}
+			} else {
+				title = badge.title || badge.subject || ''
+				status = badge.status || ''
+				color = badge.color || 'green'
+				url = badge.url || ''
+			}
+
+			list.push({
+				title,
+				badge: `https://img.shields.io/badge/${encodeURI(title)}-${encodeURI(status)}-${encodeURI(color)}.svg?style=${data.badges.style}`,
+				url
+			})
+		})
+	}
+
+	if (data.badges.sort) {
+		list.sort()
+	}
+
+	if (data.badges.first.length > 0) {
+		data.badges.first.reverse().map(title => {
+			const findBadge = list.find(badge => badge.title === title)
+			if (findBadge) {
+				list = [...[findBadge], ...list]
+			}
+		})
+	}
+
+	const allTitles = list.map(badge => badge.title)
+	data.badges.list = list.filter((badge, index) => allTitles.indexOf(badge.title) === index)
+
 	// TODO if data.twitter return add in badges
 
 	return data
@@ -259,7 +309,9 @@ const main = async () => {
 		related: [],
 		badges: {
 			style: 'flat-square',
-			list: []
+			list: [],
+			sort: false,
+			first: ['Travis', 'Downloads', 'Node', 'Version', 'XO code style']
 		},
 		preferGlobal: false,
 		documentation: false,
