@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 
-const fs = require('fs')
-const path = require('path')
-const debug = require('debug')
 const {merge} = require('lodash')
+const debug = require('debug')
+const fs = require('fs')
 const gh = require('github-url-to-object')
 const handlebars = require('handlebars')
-const npmPackage = require('package-info')
-const updateNotifier = require('update-notifier')
 const meow = require('meow')
+const npmPackage = require('package-info')
+const path = require('path')
+const updateNotifier = require('update-notifier')
+const locatePath = require('locate-path')
 
+const cwd = process.cwd()
 const log = debug('gen-readme:log')
 const cli = meow(`
 	Usage
@@ -48,7 +50,7 @@ const beautifulName = name => {
 }
 
 const showTextIf = (v, text) => {
-	if (v && v.length != 0) {
+	if (v && v.length !== 0) {
 		return text
 	}
 
@@ -56,7 +58,7 @@ const showTextIf = (v, text) => {
 }
 
 const usageShow = (content, type) => {
-	if (type == 'url') {
+	if (type === 'url') {
 		return `- [${content.replace(/htt[ps]*:\/\//i, '')}](${content})`
 	}
 
@@ -64,7 +66,7 @@ const usageShow = (content, type) => {
 }
 
 const usageShowCode = (type, text) => {
-	if (type == 'url') {
+	if (type === 'url') {
 		return ''
 	}
 
@@ -79,6 +81,18 @@ const cleanCode = str => removeSpace(removeNewLine(str))
 
 const getExtension = file => file.split('.').pop()
 
+const addPaths = (paths, files)=> {
+	const newPaths = []
+
+	paths.forEach(directory => {
+		files.forEach(file => {
+			newPaths.push(path.join(directory, file))
+		})
+	})
+
+	return newPaths
+}
+
 const addExtensions = (files, extensions) => {
 	const fileWithExtensions = []
 
@@ -92,15 +106,16 @@ const addExtensions = (files, extensions) => {
 }
 
 const getFile = fileWithExtensions => {
-	const files = fileWithExtensions.map(file => path.join(process.cwd(), file))
-	return files.find(file => fs.existsSync(file))
+	const files = fileWithExtensions.map(file => path.join(cwd, file))
+	return locatePath(files)
 }
 
 const checkFiles = async data => {
 	const documentation = await getFile(addExtensions(['docs', 'documentation', 'doc', 'usage'], ['md']))
 	const example = await getFile(addExtensions(['example'], ['js', 'sh', 'md', 'vue', 'ts']))
 	const usage = await getFile(addExtensions(['usage'], ['sh', 'bash']))
-	const screenshot = await getFile(addExtensions(['screenshot'], ['png', 'jpg', 'gif']))
+	const screenshotFiles = addExtensions(['screenshot'], ['png', 'jpg', 'gif'])
+	const screenshot = await getFile(addPaths(['media', ''], screenshotFiles))
 
 	if (documentation) {
 		data.documentation = documentation
@@ -126,7 +141,7 @@ const checkFiles = async data => {
 	}
 
 	if (screenshot) {
-		data.screenshot = path.basename(screenshot)
+		data.screenshot = path.posix.relative(cwd, screenshot)
 	}
 
 	return data
@@ -207,8 +222,10 @@ const checkBadges = data => {
 	})
 
 	data.badges.list = [...list, ...data.badges.list]
+
 	// TODO https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg?style=flat-square
 	// TODO if data.twitter return add in badges
+
 	return data
 }
 
@@ -253,9 +270,9 @@ const main = async () => {
 		engines: {}
 	}
 
-	const packageFile = path.resolve(`${process.cwd()}/package.json`)
-	const config = path.resolve(`${process.cwd()}/.gen-readme.json`)
-	const travis = path.resolve(`${process.cwd()}/.travis.yml`)
+	const packageFile = path.join(cwd, 'package.json')
+	const config = path.join(cwd, '.gen-readme.json')
+	const travis = path.join(cwd, '.travis.yml')
 
 	data = merge(
 		data,
@@ -322,6 +339,7 @@ const main = async () => {
 	}
 
 	process.stdout.write(readme)
+	return data
 }
 
 main().catch(async error => {
