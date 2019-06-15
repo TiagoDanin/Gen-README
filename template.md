@@ -4,7 +4,7 @@
 
 {{{description}}}
 
-{{#screenshot}}![]({{{.}}}){{/screenshot}}
+{{#screenshot}}<p align="center"><img src="{{{.}}}"></p>{{/screenshot}}
 
 {{showTextIf features "## Features"}}
 

@@ -45,6 +45,7 @@ const cli = meow(`
 updateNotifier({pkg: cli.pkg}).notify()
 
 const beautifulName = name => {
+	console.log(name)
 	return name
 		.replace(/^./, name[0].toUpperCase())
 		.replace(/-/g, ' ')
@@ -363,7 +364,7 @@ const main = async () => {
 		cli.flags
 	)
 
-	data.gh = gh(data.repository.url || data.repository)
+	data.gh = gh(data.repository.url || data.repository) // FIX: if null
 	data = await checkFiles(data)
 	data = checkLicense(data)
 	data = checkDocumentation(data)
