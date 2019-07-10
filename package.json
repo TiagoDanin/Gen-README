@@ -53,7 +53,7 @@
 		"github-url-to-object": "^4.0.4",
 		"handlebars": "^4.1.2",
 		"locate-path": "^5.0.0",
-		"lodash": "^4.17.11",
+		"lodash": "^4.17.14",
 		"meow": "^5.0.0",
 		"package-info": "^3.0.2",
 		"update-notifier": "^3.0.1"
