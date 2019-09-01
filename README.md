@@ -56,23 +56,76 @@ yarn test
 
 ## Dependencies
 
-- [debug](https://ghub.io/debug): small debugging utility
-- [github-url-to-object](https://ghub.io/github-url-to-object): Extract user, repo, and other interesting properties from GitHub URLs
-- [handlebars](https://ghub.io/handlebars): Handlebars provides the power necessary to let you build semantic templates effectively with no frustration
-- [locate-path](https://ghub.io/locate-path): Get the first path that exists on disk of multiple paths
-- [lodash](https://ghub.io/lodash): Lodash modular utilities.
-- [meow](https://ghub.io/meow): CLI app helper
-- [package-info](https://ghub.io/package-info): Get the information of a npm package
-- [update-notifier](https://ghub.io/update-notifier): Update notifications for your CLI app
+<details>
+	<summary><a href="https://ghub.io/debug">debug</a>: small debugging utility</summary>
+	<b>Author</b>: TJ Holowaychuk</br>
+	<b>License</b>: MIT</br>
+	<b>Version</b>: ^4.1.1
+</details>
+<details>
+	<summary><a href="https://ghub.io/github-url-to-object">github-url-to-object</a>: Extract user, repo, and other interesting properties from GitHub URLs</summary>
+	<b>Author</b>: zeke</br>
+	<b>License</b>: MIT</br>
+	<b>Version</b>: ^4.0.4
+</details>
+<details>
+	<summary><a href="https://ghub.io/handlebars">handlebars</a>: Handlebars provides the power necessary to let you build semantic templates effectively with no frustration</summary>
+	<b>Author</b>: Yehuda Katz</br>
+	<b>License</b>: MIT</br>
+	<b>Version</b>: ^4.1.2
+</details>
+<details>
+	<summary><a href="https://ghub.io/locate-path">locate-path</a>: Get the first path that exists on disk of multiple paths</summary>
+	<b>Author</b>: Sindre Sorhus</br>
+	<b>License</b>: MIT</br>
+	<b>Version</b>: ^5.0.0
+</details>
+<details>
+	<summary><a href="https://ghub.io/lodash">lodash</a>: Lodash modular utilities.</summary>
+	<b>Author</b>: John-David Dalton</br>
+	<b>License</b>: MIT</br>
+	<b>Version</b>: ^4.17.15
+</details>
+<details>
+	<summary><a href="https://ghub.io/meow">meow</a>: CLI app helper</summary>
+	<b>Author</b>: Sindre Sorhus</br>
+	<b>License</b>: MIT</br>
+	<b>Version</b>: ^5.0.0
+</details>
+<details>
+	<summary><a href="https://ghub.io/package-info">package-info</a>: Get the information of a npm package</summary>
+	<b>Author</b>: Alessandro Minoccheri</br>
+	<b>License</b>: MIT</br>
+	<b>Version</b>: ^3.0.2
+</details>
+<details>
+	<summary><a href="https://ghub.io/update-notifier">update-notifier</a>: Update notifications for your CLI app</summary>
+	<b>Author</b>: Sindre Sorhus</br>
+	<b>License</b>: BSD-2-Clause</br>
+	<b>Version</b>: ^3.0.1
+</details>
 
 ## Dev Dependencies
 
-- [xo](https://ghub.io/xo): JavaScript happiness style linter ❤️
+<details>
+	<summary><a href="https://ghub.io/xo">xo</a>: JavaScript happiness style linter ❤️</summary>
+	<b>Author</b>: Sindre Sorhus</br>
+	<b>License</b>: MIT</br>
+	<b>Version</b>: ^0.24.0
+</details>
 
 ## Related
 
-- [package-json-to-readme](https://ghub.io/package-json-to-readme): Generate a README.md from package.json contents
-- [gen-package](https://ghub.io/gen-package): Intuitive and user-friendly generator of package.json
+<details>
+	<summary><a href="https://ghub.io/package-json-to-readme">package-json-to-readme</a>: Generate a README.md from package.json contents</summary>
+	<b>Author</b>: Zeke Sikelianos</br>
+	<b>License</b>: MIT
+</details>
+<details>
+	<summary><a href="https://ghub.io/gen-package">gen-package</a>: Intuitive and user-friendly generator of package.json</summary>
+	<b>Author</b>: TiagoDanin</br>
+	<b>License</b>: MIT
+</details>
 
 ## Contributors
 

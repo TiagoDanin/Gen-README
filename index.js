@@ -280,15 +280,17 @@ const checkBadges = data => {
 	return data
 }
 
-const getInfoDeps = deps => {
-	return Promise.all(deps.map(async dep => {
+const getInfoDeps = (deps, isObject = true) => {
+	depsList = isObject ? Object.keys(deps) : deps
+	return Promise.all(depsList.map(async dep => {
 		const pkg = await npmPackage(dep).catch(() => {
 			return {}
 		})
 		return {
 			...pkg,
 			name: dep,
-			repository: `https://ghub.io/${dep}`
+			repository: `https://ghub.io/${dep}`,
+			version: isObject ? deps[dep] : '0.0.0'
 		}
 	}))
 }
@@ -370,9 +372,9 @@ const main = async () => {
 	data = checkDocumentation(data)
 	data = checkTest(data)
 	data = checkBadges(data)
-	data.dependencies = await getInfoDeps(Object.keys(data.dependencies))
-	data.devDependencies = await getInfoDeps(Object.keys(data.devDependencies))
-	data.related = await getInfoDeps(data.related)
+	data.dependencies = await getInfoDeps(data.dependencies)
+	data.devDependencies = await getInfoDeps(data.devDependencies)
+	data.related = await getInfoDeps(data.related, false)
 
 	log('data', data)
 

@@ -77,7 +77,12 @@ yarn test
 ## Dependencies
 
 {{#dependencies}}
-- [{{name}}]({{{repository}}}): {{description}}
+<details>
+	<summary><a href="{{{repository}}}">{{name}}</a>: {{description}}</summary>
+	<b>Author</b>: {{author}}</br>
+	<b>License</b>: {{license}}</br>
+	<b>Version</b>: {{version}}
+</details>
 {{/dependencies}}
 {{^dependencies}}
 None
@@ -86,13 +91,22 @@ None
 {{showTextIf devDependencies "## Dev Dependencies"}}
 
 {{#devDependencies}}
-- [{{name}}]({{{repository}}}): {{description}}
+<details>
+	<summary><a href="{{{repository}}}">{{name}}</a>: {{description}}</summary>
+	<b>Author</b>: {{author}}</br>
+	<b>License</b>: {{license}}</br>
+	<b>Version</b>: {{version}}
+</details>
 {{/devDependencies}}
 
 {{showTextIf related "## Related"}}
 
 {{#related}}
-- [{{name}}]({{{repository}}}): {{description}}
+<details>
+	<summary><a href="{{{repository}}}">{{name}}</a>: {{description}}</summary>
+	<b>Author</b>: {{author}}</br>
+	<b>License</b>: {{license}}
+</details>
 {{/related}}
 
 ## Contributors
