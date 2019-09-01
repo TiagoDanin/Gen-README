@@ -4,7 +4,7 @@
 		"Awesome badges (Travis CI, XO, NPM Download...)",
 		"List dependencies",
 		"Load documentation",
-		"Sort keys",
+		"Sort dependencies, badges and others keys",
 		"Screenshot"
 	],
 	"related": [
@@ -18,7 +18,8 @@
 	}],
 	"badges": {
 		"list": ["Fork:Package Json To Readme:blue:https://github.com/zeke/package-json-to-readme"],
-		"sort": true,
+		"sort": false,
+		"sortReverse": false,
 		"first": ["Travis", "Downloads", "Node", "Version", "Fork", "XO code style"]
 	}
 }

@@ -45,7 +45,6 @@ const cli = meow(`
 updateNotifier({pkg: cli.pkg}).notify()
 
 const beautifulName = name => {
-	console.log(name)
 	return name
 		.replace(/^./, name[0].toUpperCase())
 		.replace(/-/g, ' ')
@@ -192,7 +191,8 @@ const checkBadges = data => {
 		list.push({
 			title: 'Travis',
 			badge: `https://img.shields.io/travis/${data.gh.user}/${data.gh.repo}.svg?branch=master&style=${data.badges.style}`,
-			url: `${data.gh.travis_url}`
+			url: `${data.gh.travis_url}`,
+			color: 'green'
 		})
 	}
 
@@ -200,7 +200,8 @@ const checkBadges = data => {
 		list.push({
 			title: 'XO code style',
 			badge: `https://img.shields.io/badge/code%20style-XO-red.svg?style=${data.badges.style}`,
-			url: 'https://github.com/xojs/xo'
+			url: 'https://github.com/xojs/xo',
+			color: 'red'
 		})
 	}
 
@@ -208,19 +209,22 @@ const checkBadges = data => {
 		list.push({
 			title: 'Node',
 			badge: `https://img.shields.io/node/v/${data.name}.svg?style=${data.badges.style}`,
-			url: `https://npmjs.org/package/${data.name}`
+			url: `https://npmjs.org/package/${data.name}`,
+			color: 'green'
 		})
 	}
 
 	list.push({
 		title: 'Version',
 		badge: `https://img.shields.io/npm/v/${data.name}.svg?style=${data.badges.style}`,
-		url: `https://npmjs.org/package/${data.name}`
+		url: `https://npmjs.org/package/${data.name}`,
+		color: 'blue'
 	})
 	list.push({
 		title: 'Downloads',
 		badge: `https://img.shields.io/npm/dt/${data.name}.svg?style=${data.badges.style}`,
-		url: `https://npmjs.org/package/${data.name}`
+		url: `https://npmjs.org/package/${data.name}`,
+		color: 'green'
 	})
 
 	if (data.badges.list.length > 0) {
@@ -254,13 +258,31 @@ const checkBadges = data => {
 			list.push({
 				title,
 				badge: `https://img.shields.io/badge/${encodeURI(title)}-${encodeURI(status)}-${encodeURI(color)}.svg?style=${data.badges.style}`,
-				url
+				url,
+				color
 			})
 		})
 	}
 
 	if (data.badges.sort) {
-		list.sort()
+		if (typeof data.badges.sort === 'boolean') {
+			data.badges.sort = 'name'
+		}
+
+		const type = data.badges.sort
+		list.sort((a, b) => {
+			const indexA = a[type].toUpperCase()
+			const indexB = b[type].toUpperCase()
+			if (indexA < indexB) {
+				return data.badges.sortReverse ? 1 : -1
+			}
+
+			if (indexA > indexB) {
+				return data.badges.sortReverse ? -1 : 1
+			}
+
+			return 0
+		})
 	}
 
 	if (data.badges.first.length > 0) {
@@ -281,7 +303,7 @@ const checkBadges = data => {
 }
 
 const getInfoDeps = (deps, isObject = true) => {
-	depsList = isObject ? Object.keys(deps) : deps
+	const depsList = isObject ? Object.keys(deps) : deps
 	return Promise.all(depsList.map(async dep => {
 		const pkg = await npmPackage(dep).catch(() => {
 			return {}

@@ -10,7 +10,7 @@ Generate a README.md from package.json contents.
 - Awesome badges (Travis CI, XO, NPM Download...)
 - List dependencies
 - Load documentation
-- Sort keys
+- Sort dependencies, badges and others keys
 - Screenshot
 
 ## Installation
