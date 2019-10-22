@@ -14,7 +14,7 @@
 
 ## Installation
 
-Module available through the [npm registry](https://www.npmjs.com/). It can be installed using the {{#atom}}[`apm`](https://github.com/atom/apm){{/atom}} {{^atom}}[`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally) or [`yarn`](https://yarnpkg.com/en/){{/atom}} command line tools.
+Module available through the [npm registry](https://www.npmjs.com/). It can be installed using the {{#atom}}[`apm`](https://github.com/atom/apm){{/atom}}{{^atom}}{{^yarn}}[`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally){{/yarn}}{{#yarn}}[`yarn`](https://yarnpkg.com/en/){{/yarn}}{{/atom}} command line tool.
 
 ```sh
 {{#atom}}
@@ -66,12 +66,18 @@ yarn add {{name}}
 
 To run the test suite, first install the dependencies, then run `test`:
 
+{{^@root.yarn}}
 ```sh
 # NPM
 npm test
-# Or Using Yarn
+```
+{{/@root.yarn}}
+{{#@root.yarn}}
+```sh
+# Using Yarn
 yarn test
 ```
+{{/yarn}}
 {{/scripts.test}}
 
 ## Dependencies
