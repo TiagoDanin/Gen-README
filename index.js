@@ -117,7 +117,7 @@ const checkFiles = async data => {
 	const usage = await getFile(addExtensions(['usage'], ['sh', 'bash']))
 	const screenshotFiles = addExtensions(['screenshot'], ['png', 'jpg', 'gif'])
 	const screenshot = await getFile(addPaths(['media', ''], screenshotFiles))
-	const yarn = await getFile(addExtensions(['yarn'] ,['lock']))
+	const yarn = await getFile(addExtensions(['yarn'], ['lock']))
 
 	if (documentation) {
 		data.documentation = documentation
