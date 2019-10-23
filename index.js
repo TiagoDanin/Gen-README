@@ -21,6 +21,7 @@ const cli = meow(`
 	Options
 		--travis       Force enable Travis CI Badge
 		--xo           Force enable XO Badge
+		--no-badge     Disable default Badge
 		--write, -w    Output README.md file
 
 	Examples
@@ -35,6 +36,10 @@ const cli = meow(`
 		},
 		xo: {
 			type: 'boolean'
+		},
+		badge: {
+			type: 'boolean',
+			default: true
 		},
 		write: {
 			type: 'boolean',
@@ -214,18 +219,20 @@ const checkBadges = data => {
 		})
 	}
 
-	list.push({
-		title: 'Version',
-		badge: `https://img.shields.io/npm/v/${data.name}.svg?style=${data.badges.style}`,
-		url: `https://npmjs.org/package/${data.name}`,
-		color: 'blue'
-	})
-	list.push({
-		title: 'Downloads',
-		badge: `https://img.shields.io/npm/dt/${data.name}.svg?style=${data.badges.style}`,
-		url: `https://npmjs.org/package/${data.name}`,
-		color: 'green'
-	})
+	if (data.badge) {
+		list.push({
+			title: 'Version',
+			badge: `https://img.shields.io/npm/v/${data.name}.svg?style=${data.badges.style}`,
+			url: `https://npmjs.org/package/${data.name}`,
+			color: 'blue'
+		})
+		list.push({
+			title: 'Downloads',
+			badge: `https://img.shields.io/npm/dt/${data.name}.svg?style=${data.badges.style}`,
+			url: `https://npmjs.org/package/${data.name}`,
+			color: 'green'
+		})
+	}
 
 	if (data.badges.list.length > 0) {
 		data.badges.list.map(badge => {
@@ -344,6 +351,7 @@ const main = async () => {
 		atom: false,
 		write: false,
 		xo: false,
+		badge: false,
 		engines: {}
 	}
 
