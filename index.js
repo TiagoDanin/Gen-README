@@ -117,6 +117,7 @@ const checkFiles = async data => {
 	const usage = await getFile(addExtensions(['usage'], ['sh', 'bash']))
 	const screenshotFiles = addExtensions(['screenshot'], ['png', 'jpg', 'gif'])
 	const screenshot = await getFile(addPaths(['media', ''], screenshotFiles))
+	const yarn = await getFile(addExtensions(['yarn'], ['lock']))
 
 	if (documentation) {
 		data.documentation = documentation
@@ -143,6 +144,10 @@ const checkFiles = async data => {
 
 	if (screenshot) {
 		data.screenshot = path.posix.relative(cwd, screenshot)
+	}
+
+	if (yarn) {
+		data.yarn = true
 	}
 
 	return data
@@ -342,6 +347,7 @@ const main = async () => {
 		documentation: false,
 		travis: false,
 		atom: false,
+		yarn: false,
 		write: false,
 		xo: false,
 		engines: {}
