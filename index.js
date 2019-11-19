@@ -201,7 +201,7 @@ const checkBadges = data => {
 		})
 	}
 
-	if (data.xo) {
+	if (data.xo && data.badge) {
 		list.push({
 			title: 'XO code style',
 			badge: `https://img.shields.io/badge/code%20style-XO-red.svg?style=${data.badges.style}`,
@@ -210,7 +210,7 @@ const checkBadges = data => {
 		})
 	}
 
-	if (data.engines && data.engines.node) {
+	if (data.engines && data.engines.node && data.badge) {
 		list.push({
 			title: 'Node',
 			badge: `https://img.shields.io/node/v/${data.name}.svg?style=${data.badges.style}`,
