@@ -41,6 +41,9 @@ gen-readme package.json --travis
 
 # Output in README.md
 gen-readme package.json --write
+
+# Disable default badges
+gen-readme package.json --no-badges
 ```
 
 ## Tests
