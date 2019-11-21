@@ -197,7 +197,7 @@ const checkTest = data => {
 
 const checkBadges = data => {
 	let list = []
-	if (data.travis) {
+	if (data.travis && data.badge) {
 		list.push({
 			title: 'Travis',
 			badge: `https://img.shields.io/travis/${data.gh.user}/${data.gh.repo}.svg?branch=master&style=${data.badges.style}`,
@@ -357,7 +357,7 @@ const main = async () => {
 		yarn: false,
 		write: false,
 		xo: false,
-		badge: false,
+		badge: true,
 		engines: {}
 	}
 
