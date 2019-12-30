@@ -123,6 +123,7 @@ const checkFiles = async data => {
 	const screenshotFiles = addExtensions(['screenshot'], ['png', 'jpg', 'gif'])
 	const screenshot = await getFile(addPaths(['media', ''], screenshotFiles))
 	const yarn = await getFile(addExtensions(['yarn'], ['lock']))
+	const npm = await getFile(addExtensions(['package-lock'], ['json']))
 
 	if (documentation) {
 		data.documentation = documentation
@@ -153,6 +154,14 @@ const checkFiles = async data => {
 
 	if (yarn) {
 		data.yarn = true
+	}
+
+	if (npm) {
+		data.npm = true
+	}
+
+	if (!data.yarn && !data.npm) {
+		data.yarn = true // Force use Yarn :)
 	}
 
 	return data
@@ -190,6 +199,11 @@ const checkDocumentation = data => {
 const checkTest = data => {
 	if (data.scripts.test && data.scripts.test.startsWith('echo')) {
 		data.scripts.test = false
+	} else {
+		data.scripts.test = {
+			...data,
+			...data.scripts.test
+		}
 	}
 
 	return data

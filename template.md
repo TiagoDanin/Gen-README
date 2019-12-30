@@ -14,7 +14,7 @@
 
 ## Installation
 
-Module available through the [npm registry](https://www.npmjs.com/). It can be installed using the {{#atom}}[`apm`](https://github.com/atom/apm){{/atom}}{{^atom}}{{^yarn}}[`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally){{/yarn}}{{#yarn}}[`yarn`](https://yarnpkg.com/en/){{/yarn}}{{/atom}} command line tool.
+Module available through the [npm registry](https://www.npmjs.com/). It can be installed using the {{#atom}}[`apm`](https://github.com/atom/apm){{/atom}}{{^atom}}[`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally) or [`yarn`](https://yarnpkg.com/en/){{/atom}} command line tool.
 
 ```sh
 {{#atom}}
@@ -22,14 +22,7 @@ Module available through the [npm registry](https://www.npmjs.com/). It can be i
 apm install {{name}}
 {{/atom}}
 {{^atom}}
-# NPM
-{{#preferGlobal}}
-npm install {{name}} --global
-{{/preferGlobal}}
-{{^preferGlobal}}
-npm install {{name}} --save
-{{/preferGlobal}}
-# Or Using Yarn
+# Yarn {{#yarn}}(Recomend){{/yarn}}
 {{#preferGlobal}}
 yarn global add {{name}}
 {{/preferGlobal}}
@@ -37,6 +30,13 @@ yarn global add {{name}}
 yarn add {{name}}
 {{/preferGlobal}}
 {{/atom}}
+# NPM {{#npm}}{{^yarn}}(Recomend){{/yarn}}{{/npm}}
+{{#preferGlobal}}
+npm install {{name}} --global
+{{/preferGlobal}}
+{{^preferGlobal}}
+npm install {{name}} --save
+{{/preferGlobal}}
 ```
 
 {{#usage}}
@@ -66,18 +66,17 @@ yarn add {{name}}
 
 To run the test suite, first install the dependencies, then run `test`:
 
-{{^@root.yarn}}
 ```sh
-# NPM
-npm test
-```
-{{/@root.yarn}}
-{{#@root.yarn}}
-```sh
+{{#yarn}}
 # Using Yarn
 yarn test
-```
 {{/yarn}}
+{{#npm}}
+# Using NPM
+npm run test
+{{/npm}}
+```
+
 {{/scripts.test}}
 
 ## Dependencies

@@ -15,13 +15,13 @@ Generate a README.md from package.json contents.
 
 ## Installation
 
-Module available through the [npm registry](https://www.npmjs.com/). It can be installed using the  [`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally) or [`yarn`](https://yarnpkg.com/en/) command line tools.
+Module available through the [npm registry](https://www.npmjs.com/). It can be installed using the [`npm`](https://docs.npmjs.com/getting-started/installing-npm-packages-locally) or [`yarn`](https://yarnpkg.com/en/) command line tool.
 
 ```sh
-# NPM
-npm install gen-readme --global
-# Or Using Yarn
+# Yarn (Recomend)
 yarn global add gen-readme
+# or NPM
+npm install gen-readme --global
 ```
 
 ## Usage
@@ -51,9 +51,7 @@ gen-readme package.json --no-badges
 To run the test suite, first install the dependencies, then run `test`:
 
 ```sh
-# NPM
-npm test
-# Or Using Yarn
+# Using Yarn
 yarn test
 ```
 
@@ -75,7 +73,7 @@ yarn test
 	<summary><a href="https://ghub.io/handlebars">handlebars</a>: Handlebars provides the power necessary to let you build semantic templates effectively with no frustration</summary>
 	<b>Author</b>: Yehuda Katz</br>
 	<b>License</b>: MIT</br>
-	<b>Version</b>: ^4.1.2
+	<b>Version</b>: ^4.5.3
 </details>
 <details>
 	<summary><a href="https://ghub.io/locate-path">locate-path</a>: Get the first path that exists on disk of multiple paths</summary>
@@ -93,7 +91,7 @@ yarn test
 	<summary><a href="https://ghub.io/meow">meow</a>: CLI app helper</summary>
 	<b>Author</b>: Sindre Sorhus</br>
 	<b>License</b>: MIT</br>
-	<b>Version</b>: ^5.0.0
+	<b>Version</b>: ^6.0.0
 </details>
 <details>
 	<summary><a href="https://ghub.io/package-info">package-info</a>: Get the information of a npm package</summary>
@@ -105,16 +103,16 @@ yarn test
 	<summary><a href="https://ghub.io/update-notifier">update-notifier</a>: Update notifications for your CLI app</summary>
 	<b>Author</b>: Sindre Sorhus</br>
 	<b>License</b>: BSD-2-Clause</br>
-	<b>Version</b>: ^3.0.1
+	<b>Version</b>: ^4.0.0
 </details>
 
 ## Dev Dependencies
 
 <details>
-	<summary><a href="https://ghub.io/xo">xo</a>: JavaScript happiness style linter ❤️</summary>
+	<summary><a href="https://ghub.io/xo">xo</a>: JavaScript linter with great defaults</summary>
 	<b>Author</b>: Sindre Sorhus</br>
 	<b>License</b>: MIT</br>
-	<b>Version</b>: ^0.24.0
+	<b>Version</b>: ^0.25.3
 </details>
 
 ## Related
