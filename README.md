@@ -20,7 +20,7 @@ Module available through the [npm registry](https://www.npmjs.com/). It can be i
 ```sh
 # Yarn (Recomend)
 yarn global add gen-readme
-# or NPM
+# NPM 
 npm install gen-readme --global
 ```
 
