@@ -62,13 +62,6 @@
 		"xo": "^0.25.3"
 	},
 	"xo": {
-		"rules": {
-			"quote-props": "warn",
-			"eqeqeq": "warn",
-			"array-callback-return": "warn",
-			"require-atomic-updates": "warn",
-			"no-else-return": "off"
-		},
 		"semicolon": false
 	}
 }

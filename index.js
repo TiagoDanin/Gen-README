@@ -273,6 +273,8 @@ const checkBadges = data => {
 				url,
 				color
 			})
+
+			return list
 		})
 	}
 
@@ -303,13 +305,13 @@ const checkBadges = data => {
 			if (findBadge) {
 				list = [...[findBadge], ...list]
 			}
+
+			return findBadge
 		})
 	}
 
 	const allTitles = list.map(badge => badge.title)
 	data.badges.list = list.filter((badge, index) => allTitles.indexOf(badge.title) === index)
-
-	// TODO if data.twitter return add in badges
 
 	return data
 }
@@ -395,6 +397,8 @@ const main = async () => {
 		if (!cli.flags[f]) {
 			delete cli.flags[f]
 		}
+
+		return f
 	})
 
 	data = merge(
