@@ -56,7 +56,7 @@
 		"lodash": "^4.17.15",
 		"meow": "^6.0.0",
 		"package-info": "^3.0.2",
-		"update-notifier": "^4.0.0"
+		"update-notifier": "^4.1.0"
 	},
 	"devDependencies": {
 		"xo": "^0.25.3"
