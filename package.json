@@ -59,7 +59,7 @@
 		"update-notifier": "^4.1.0"
 	},
 	"devDependencies": {
-		"xo": "^0.26.1"
+		"xo": "^0.27.2"
 	},
 	"xo": {
 		"semicolon": false
