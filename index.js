@@ -79,11 +79,11 @@ const usageShowCode = (type, text) => {
 	return text
 }
 
-const removeSpace = str => str.replace(/(\s*)$/g, '')
+const removeSpace = string => string.replace(/(\s*)$/g, '')
 
-const removeNewLine = str => str.replace(/\n[\n]*\n/gs, '\n\n')
+const removeNewLine = string => string.replace(/\n+\n/gs, '\n\n')
 
-const cleanCode = str => removeSpace(removeNewLine(str))
+const cleanCode = string => removeSpace(removeNewLine(string))
 
 const getExtension = file => file.split('.').pop()
 
@@ -136,7 +136,7 @@ const checkFiles = async data => {
 		}
 
 		data.example.content = data.example.content.replace(
-			/require\((['"])?\.[/]*['"]?\)/,
+			/require\((['"])?\.\/*['"]?\)/,
 			`require($1${data.name}$1)`
 		)
 	}

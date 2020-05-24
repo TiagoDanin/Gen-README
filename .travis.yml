@@ -1,8 +1,7 @@
 os: linux
 language: node_js
 node_js:
+  - '14'
   - '13'
   - '12'
-  - '11'
   - '10'
-  - '8'
