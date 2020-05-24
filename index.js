@@ -126,7 +126,7 @@ const checkFiles = async data => {
 	const npm = await getFile(addExtensions(['package-lock'], ['json']))
 
 	if (documentation) {
-		data.documentation = documentation
+		data.documentation = cleanCode(fs.readFileSync(documentation).toString())
 	}
 
 	if (example) {
