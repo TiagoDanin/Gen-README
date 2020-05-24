@@ -6,7 +6,7 @@
 
 {{#screenshot}}<p align="center"><img src="{{{.}}}"></p>{{/screenshot}}
 
-{{showTextIf features "## Features"}}
+{{showTextIf features "" "## Feature" "## Features"}}
 
 {{#features}}
 - {{{.}}}
@@ -47,13 +47,16 @@ npm install {{name}} --save
 {{{usageShowCode language "```"}}}
 {{/usage}}
 
-{{#example}}
-## Example
+{{showTextIf examples "" "## Example" "## Examples"}}
+
+{{#examples}}
+{{showTitleLanguage examples language}}
 
 {{{usageShowCode language "```"}}}{{usageShowCode language language}}
 {{{usageShow content language}}}
 {{{usageShowCode language "```"}}}
-{{/example}}
+
+{{/examples}}
 
 {{#documentation}}
 ## Documentation
@@ -79,7 +82,7 @@ npm run test
 
 {{/scripts.test}}
 
-## Dependencies
+{{showTextIf dependencies "## Dependency" "## Dependency" "## Dependencies"}}
 
 {{#dependencies}}
 <details>
@@ -93,7 +96,7 @@ npm run test
 None
 {{/dependencies}}
 
-{{showTextIf devDependencies "## Dev Dependencies"}}
+{{showTextIf devDependencies "" "## Dev Dependency" "## Dev Dependencies"}}
 
 {{#devDependencies}}
 <details>
@@ -104,7 +107,7 @@ None
 </details>
 {{/devDependencies}}
 
-{{showTextIf related "## Related"}}
+{{showTextIf related "" "## Related" "## Related"}}
 
 {{#related}}
 <details>
@@ -118,7 +121,7 @@ None
 
 Pull requests and stars are always welcome. For bugs and feature requests, please [create an issue](https://github.com/{{gh.user}}/{{gh.repo}}/issues). [List of all contributors](https://github.com/{{gh.user}}/{{gh.repo}}/graphs/contributors).
 
-{{showTextIf thanks "## Thanks"}}
+{{showTextIf thanks  "" "## Thanks" "## Thanks"}}
 
 {{#thanks}}
 - [{{name}}]({{{url}}}): {{description}}

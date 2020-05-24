@@ -63,5 +63,12 @@
 	},
 	"xo": {
 		"semicolon": false
-	}
+	},
+	"resolutions": {
+		"minimist": "^0.2.1",
+		"kind-of": "^6.0.3"
+	},
+	"Related": [
+		"gen-package"
+	]
 }

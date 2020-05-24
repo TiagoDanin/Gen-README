@@ -55,12 +55,18 @@ const beautifulName = name => {
 		.replace(/-/g, ' ')
 }
 
-const showTextIf = (v, text) => {
-	if (v && v.length !== 0) {
-		return text
+const showTextIf = (value, textZero, textOne = '', textPlural = '') => {
+	if (!value) {
+		return textZero
 	}
 
-	return ''
+	if (value.length == 1) {
+		return textOne
+	} else if (value.length > 1) {
+		return textPlural // +2
+	}
+
+	return textZero
 }
 
 const usageShow = (content, type) => {
@@ -79,11 +85,52 @@ const usageShowCode = (type, text) => {
 	return text
 }
 
+const getLabelLanguage = (language) => {
+	switch (language) {
+		case 'js':
+			return 'JavaScript'
+		case 'ts':
+			return 'TypeScript'
+		case 'md':
+			return 'Markdown'
+		case 'sh':
+			return 'Terminal'
+		case 'vue':
+			return 'Vue'
+		case 'url':
+			return 'Web'
+	}
+
+	return ''
+}
+
+const showTitleLanguage = (exampleList, language) => {
+	if (exampleList && exampleList.length >= 2) {
+		return '### ' + getLabelLanguage(language)
+	}
+
+	return ''
+}
+
 const removeSpace = string => string.replace(/(\s*)$/g, '')
 
 const removeNewLine = string => string.replace(/\n+\n/gs, '\n\n')
 
 const cleanCode = string => removeSpace(removeNewLine(string))
+
+const cleanPathImport = (string, data) => {
+	string = string.replace(
+		/require\s*\((['"])?\.\/*['"]?\)/, // Javascript
+		`require($1${data.name}$1)`
+	)
+
+	string = string.replace(
+		/from\s*(['"])?\.\/*['"]?/, // TypeScript
+		`from $1${data.name}$1`
+	)
+
+	return string
+}
 
 const getExtension = file => file.split('.').pop()
 
@@ -116,9 +163,14 @@ const getFile = fileWithExtensions => {
 	return locatePath(files)
 }
 
+const getFiles = fileWithExtensions => {
+	const files = fileWithExtensions.map(file => path.join(cwd, file))
+	return files.filter(file => fs.existsSync(file))
+}
+
 const checkFiles = async data => {
 	const documentation = await getFile(addExtensions(['docs', 'documentation', 'doc', 'usage'], ['md']))
-	const example = await getFile(addExtensions(['example'], ['js', 'sh', 'md', 'vue', 'ts']))
+	const examples = await getFiles(addExtensions(['example'], ['js', 'sh', 'md', 'vue', 'ts']))
 	const usage = await getFile(addExtensions(['usage'], ['sh', 'bash']))
 	const screenshotFiles = addExtensions(['screenshot'], ['png', 'jpg', 'gif'])
 	const screenshot = await getFile(addPaths(['media', ''], screenshotFiles))
@@ -129,16 +181,15 @@ const checkFiles = async data => {
 		data.documentation = cleanCode(fs.readFileSync(documentation).toString())
 	}
 
-	if (example) {
-		data.example = {
-			language: getExtension(example),
-			content: cleanCode(fs.readFileSync(example).toString())
-		}
-
-		data.example.content = data.example.content.replace(
-			/require\((['"])?\.\/*['"]?\)/,
-			`require($1${data.name}$1)`
-		)
+	data.examples = []
+	if (examples && examples.length >= 1) {
+		data.examples = examples.map(example => {
+			return {
+				language: getExtension(example),
+				content: cleanPathImport(cleanCode(fs.readFileSync(example).toString()), data),
+				examples: examples
+			}
+		})
 	}
 
 	if (usage) {
@@ -436,6 +487,7 @@ const main = async () => {
 	handlebars.registerHelper('beautiful', beautifulName)
 	handlebars.registerHelper('usageShow', usageShow)
 	handlebars.registerHelper('usageShowCode', usageShowCode)
+	handlebars.registerHelper('showTitleLanguage', showTitleLanguage)
 
 	const template = fs.readFileSync(path.join(__dirname, 'template.md')).toString()
 	let readme = handlebars.compile(template)(data)

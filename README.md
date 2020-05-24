@@ -106,7 +106,7 @@ yarn test
 	<b>Version</b>: ^4.1.0
 </details>
 
-## Dev Dependencies
+## Dev Dependency
 
 <details>
 	<summary><a href="https://ghub.io/xo">xo</a>: JavaScript/TypeScript linter with great defaults</summary>
