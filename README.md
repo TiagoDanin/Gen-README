@@ -4,6 +4,8 @@
 
 Generate a README.md from package.json contents.
 
+<p align="center"><img src="screenshot.png"></p>
+
 ## Features
 
 - Automate and improve your readme
@@ -44,6 +46,12 @@ gen-readme package.json --write
 
 # Disable default badges
 gen-readme package.json --no-badges
+```
+
+## Example
+
+```js
+dsa
 ```
 
 ## Tests
@@ -98,6 +106,12 @@ yarn test
 	<b>Author</b>: Alessandro Minoccheri</br>
 	<b>License</b>: MIT</br>
 	<b>Version</b>: ^3.0.2
+</details>
+<details>
+	<summary><a href="https://ghub.io/upath">upath</a>: A proxy to &#x60;path&#x60;, replacing &#x60;\&#x60; with &#x60;/&#x60; for all results &amp; new methods to normalize &amp; join keeping leading &#x60;./&#x60; and add, change, default, trim file extensions.</summary>
+	<b>Author</b>: Angelos Pikoulas</br>
+	<b>License</b>: MIT</br>
+	<b>Version</b>: ^1.2.0
 </details>
 <details>
 	<summary><a href="https://ghub.io/update-notifier">update-notifier</a>: Update notifications for your CLI app</summary>

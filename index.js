@@ -2,6 +2,7 @@
 
 const fs = require('fs')
 const path = require('path')
+const upath = require('upath')
 const {merge} = require('lodash')
 const debug = require('debug')
 const gh = require('github-url-to-object')
@@ -60,9 +61,11 @@ const showTextIf = (value, textZero, textOne = '', textPlural = '') => {
 		return textZero
 	}
 
-	if (value.length == 1) {
+	if (value.length === 1) {
 		return textOne
-	} else if (value.length > 1) {
+	}
+
+	if (value.length >= 1) {
 		return textPlural // +2
 	}
 
@@ -85,7 +88,7 @@ const usageShowCode = (type, text) => {
 	return text
 }
 
-const getLabelLanguage = (language) => {
+const getLabelLanguage = language => {
 	switch (language) {
 		case 'js':
 			return 'JavaScript'
@@ -99,9 +102,9 @@ const getLabelLanguage = (language) => {
 			return 'Vue'
 		case 'url':
 			return 'Web'
+		default:
+			return 'Code'
 	}
-
-	return ''
 }
 
 const showTitleLanguage = (exampleList, language) => {
@@ -187,7 +190,7 @@ const checkFiles = async data => {
 			return {
 				language: getExtension(example),
 				content: cleanPathImport(cleanCode(fs.readFileSync(example).toString()), data),
-				examples: examples
+				examples
 			}
 		})
 	}
@@ -200,7 +203,7 @@ const checkFiles = async data => {
 	}
 
 	if (screenshot) {
-		data.screenshot = path.posix.relative(cwd, screenshot)
+		data.screenshot = upath.normalize(path.relative(cwd, screenshot))
 	}
 
 	if (yarn) {
