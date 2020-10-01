@@ -57,7 +57,7 @@
 		"meow": "^7.1.1",
 		"package-info": "^3.0.2",
 		"upath": "^1.2.0",
-		"update-notifier": "^4.1.0"
+		"update-notifier": "^5.0.0"
 	},
 	"devDependencies": {
 		"xo": "^0.33.1"
