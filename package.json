@@ -56,7 +56,7 @@
 		"lodash": "^4.17.21",
 		"meow": "^10.0.0",
 		"package-info": "^4.0.0",
-		"upath": "^1.2.0",
+		"upath": "^2.0.1",
 		"update-notifier": "^5.1.0"
 	},
 	"devDependencies": {
