@@ -3450,10 +3450,10 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
-package-info@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/package-info/-/package-info-3.0.2.tgz#6cef6267fc946ab7e9176cc4f6fc20951925a395"
-  integrity sha512-XVZqQecIt0zrI0jRKtIiNKji8tC0O8/Ct+/y2FFfViHccdk/qpm0nKAlNaUNkqVGYO0k0l5nHfBTyxFskBSwZA==
+package-info@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/package-info/-/package-info-4.0.0.tgz#3359d2cb908b5bbc627cacf8fa455ff61f952796"
+  integrity sha512-kEh/EPdW2nJs9OxEq72H6q2IY/cPr2uRgSJFWYXrNzJrnh4hiUe8nJAKcusiWTK6fi16jvSsHcfPCuza43M1Ng==
   dependencies:
     got "^6.3.0"
     pinkie-promise "^2.0.0"
