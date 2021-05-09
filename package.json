@@ -54,7 +54,7 @@
 		"handlebars": "^4.7.7",
 		"locate-path": "^6.0.0",
 		"lodash": "^4.17.20",
-		"meow": "^7.1.1",
+		"meow": "^10.0.0",
 		"package-info": "^3.0.2",
 		"upath": "^1.2.0",
 		"update-notifier": "^5.0.0"
