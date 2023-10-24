@@ -51,7 +51,7 @@
 	"dependencies": {
 		"debug": "^4.2.0",
 		"github-url-to-object": "^4.0.6",
-		"handlebars": "^4.7.7",
+		"handlebars": "^4.7.8",
 		"locate-path": "^6.0.0",
 		"lodash": "^4.17.21",
 		"meow": "^10.0.0",
