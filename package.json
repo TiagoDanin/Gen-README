@@ -26,7 +26,7 @@
 		"test": "xo && DEBUG=* node index.js --write --travis --xo"
 	},
 	"engines": {
-		"node": ">=v14.16.1"
+		"node": ">=22.14.0"
 	},
 	"private": false,
 	"repository": {
