@@ -60,7 +60,7 @@
 		"update-notifier": "^5.1.0"
 	},
 	"devDependencies": {
-		"xo": "^0.39.1"
+		"xo": "^0.61.1"
 	},
 	"xo": {
 		"semicolon": false
